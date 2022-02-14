@@ -1,4 +1,4 @@
-const MixinComponentPoem = {
+const MixinComponentImageUpload = {
     props: {
         node: {
             type: Object,

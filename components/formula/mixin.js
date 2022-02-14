@@ -1,3 +1,6 @@
+import katex from 'katex'
+import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard'
+
 const MixinComponentFormula = {
     props: {
         node: {
