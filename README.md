@@ -1,51 +1,6 @@
 # Vue Tiptap Katex
 
-## Install
-
-    npm install --save vue-tiptap-katex
-
-## Demo
-
-    git clone https://github.com/kerasus/vue-tiptap-katex
-    cd vue-tiptap-katex
-    npm install
-    npm run serve
-
-Then you should be able to navigate with your browser and see the demo in http://localhost:8080/
-
-## Usage
-
-### on &lt;template&gt; add
-
-something like this
-
-    <vue-tiptap-katex />
-
-### on &lt;script&gt; add
-
-#### option 1
-
-In the same template file, at `<script>` part, this will make the component available only to the template in this file
-
-    import VueTiptapKatex from 'vue-tiptap-katex'
-    ...
-    export default {
-      ...
-      components: {
-        VueTiptapKatex,
-        ...
-      },
-      ...
-    }
-
-#### option 2
-
-At main Vue configuration, this will make the component available to all templates in your app
-
-    import Vue from 'vue'
-    import VueTiptapKatex from 'vue-tiptap-katex'
-    ...
-    Vue.component('vue-tiptap-katex', VueTiptapKatex)
+This is a core package for [vue-tiptap-katex](https://www.npmjs.com/package/vue-tiptap-katex). It has no use separately.
 
 ## Develop and build
 
