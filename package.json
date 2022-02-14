@@ -1,6 +1,6 @@
 {
   "name": "vue-tiptap-katex-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "core of tiptap editor",
   "main": "index.js",
   "keywords": [
@@ -13,16 +13,21 @@
     {
       "name": "Ali Esmaeeli",
       "email": "aliesmaeeli20@gmail.com",
-      "url": "https://github.com/kerasus/vue-tiptap-katex"
+      "url": "https://github.com/kerasus/vue-tiptap-katex-core"
     },
     {
       "name": "Mostafa Kazemi",
       "email": "neo.kazemi168@gmail.com",
-      "url": "https://github.com/neokazemi/vue-tiptap-katex"
+      "url": "https://github.com/neokazemi/vue-tiptap-katex-core"
+    },
+    {
+      "name": "Yasaman gonehi",
+      "email": "yasaman.gonehi@gmail.com",
+      "url": "https://github.com/neokazemi/vue-tiptap-katex-core"
     }
   ],
   "license": "MIT",
-  "homepage": "https://github.com/kerasus/vue-tiptap-katex",
+  "homepage": "https://github.com/kerasus/vue-tiptap-katex-core",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
