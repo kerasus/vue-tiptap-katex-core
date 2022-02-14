@@ -444,11 +444,24 @@
           />
         </div>
       </li>
+      <li>
+        <div
+          v-tooltip="'Help Me'"
+          class="toolbar-item"
+            @click="dialog = true"
+        >
+          <span
+            class="mdi mdi-information-outline"
+          />
+        </div>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
+import InteractiveInfoTable from '../tipTapInteractiveInfoTable';
+
 import {
   // Directives
   VTooltip,
@@ -482,6 +495,7 @@ function insertHTML({state, view}, value) {
 export default {
   name: 'Toolbar',
   components: {
+    InteractiveInfoTable,
     // eslint-disable-next-line vue/no-unused-components
     Dropdown,
     // eslint-disable-next-line vue/no-unused-components
@@ -531,123 +545,114 @@ export default {
     }
   },
   methods: {
-    insertPoem() {
-      insertHTML(this.editor, '<ol><li><table class="poem"><tr class="beit"><td class="mesra1">معشوقه به سامان شد تا باد چنین بادا</td><td class="mesra2">کفرش همه ایمان شد تا باد چنین بادا</td></tr></table></ol></li>')
+    insertPoem () {
+        // insertHTML(this.editor, '<ol><li><table class="poem"><tr class="beit"><td class="mesra1">معشوقه به سامان شد تا باد چنین بادا</td><td class="mesra2">کفرش همه ایمان شد تا باد چنین بادا</td></tr></table></ol></li>')
+        insertHTML(this.editor, '<tiptap-interactive-poem><mesra></mesra><mesra></mesra></tiptap-interactive-poem>')
     },
-    justify(value) {
-      this.editor.chain().focus().setTextAlign(value).run()
-      this.editor.chain().focus().setImageAlign(value).run()
-    },
-    paste() {
-      navigator.clipboard.readText()
-          .then(text => {
-            let string = this.convertToTiptap(text)
-            this.editor.commands.insertContent(string)
-          })
-          .catch(err => {
-            console.error('Failed to read clipboard contents: ', err);
-          });
-    },
-    convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
-      string = string.replaceAll('¬', '&#8202;')
-      string = this.convertHTMLImageToInlineInteractive(string)
-      string = this.convertHTMLImageToInteractive(string)
-      string = this.convertHTMLKatexToInteractive(string)
-      return string
-    },
-    convertHTMLImageToInteractive(string) {
-      var wrapper = document.createElement('div')
-      wrapper.innerHTML = string
-      let imagesParent = wrapper.querySelectorAll('img')
-      imagesParent.forEach(item => {
-        let imageHTML = item.attributes[0].nodeValue
-        if (imageHTML) {
-          let justify = 'center'
-          if (item.parentElement.style.display === 'flex') {
-            if (item.parentElement.style.justifyContent === 'flex-start') {
-              justify = 'right'
-            } else if (item.parentElement.style.justifyContent === 'center') {
-              justify = 'center'
-            } else if (item.parentElement.style.justifyContent === 'flex-end') {
-              justify = 'left'
+    justify (value) {
+        this.editor.chain().focus().setTextAlign(value).run()
+        this.editor.chain().focus().setImageAlign(value).run()
+      },
+      convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
+        string = string.replaceAll('¬', '&#8202;')
+        string = this.convertHTMLImageToInlineInteractive(string)
+        string = this.convertHTMLImageToInteractive(string)
+        string = this.convertHTMLKatexToInteractive(string)
+        return string
+      },
+      convertHTMLImageToInteractive(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let imagesParent = wrapper.querySelectorAll('img')
+        imagesParent.forEach(item => {
+          let imageHTML = item.attributes[0].nodeValue
+          if (imageHTML) {
+            let justify = 'center'
+            if (item.parentElement.style.display === 'flex') {
+              if (item.parentElement.style.justifyContent === 'flex-start') {
+                justify = 'right'
+              } else if (item.parentElement.style.justifyContent === 'center') {
+                justify = 'center'
+              } else if (item.parentElement.style.justifyContent === 'flex-end') {
+                justify = 'left'
+              }
+            }
+            imageHTML =
+                    '<tiptap-interactive-image-upload-inline' +
+                    ' url="' + item.attributes['src'].nodeValue + '" ' +
+                    'width="' + item.attributes['width'].nodeValue + '" ' +
+                    'height="' + item.attributes['height'].nodeValue + '" ' +
+                    'justify="' + justify + '"' +
+                    '></tiptap-interactive-image-upload-inline>'
+            var imageWrapper = document.createElement('div')
+            imageWrapper.innerHTML = imageHTML
+            if (item.parentElement.style.display === 'flex') {
+              item.parentElement.replaceWith(imageWrapper)
+            } else {
+              item.replaceWith(imageWrapper)
             }
           }
-          imageHTML =
-              '<tiptap-interactive-image-upload-inline' +
-              ' url="' + item.attributes['src'].nodeValue + '" ' +
-              'width="' + item.attributes['width'].nodeValue + '" ' +
-              'height="' + item.attributes['height'].nodeValue + '" ' +
-              'justify="' + justify + '"' +
-              '></tiptap-interactive-image-upload-inline>'
-          var imageWrapper = document.createElement('div')
-          imageWrapper.innerHTML = imageHTML
-          if (item.parentElement.style.display === 'flex') {
+        })
+        return wrapper.innerHTML
+      },
+      convertHTMLImageToInlineInteractive(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let imagesParent = wrapper.querySelectorAll('span img')
+        imagesParent.forEach(item => {
+          let imageHTML = item.attributes[0].nodeValue
+          if (imageHTML) {
+            let marginBottom = 0
+            if (item.style.marginBottom) {
+              marginBottom = item.style.marginBottom.slice(0, -2)
+            }
+            imageHTML =
+                    '<tiptap-interactive-image-upload-inline' +
+                    ' url="' + item.attributes['src'].nodeValue + '" ' +
+                    'width="' + item.attributes['width'].nodeValue + '" ' +
+                    'height="' + item.attributes['height'].nodeValue + '" ' +
+                    'vertical="' + marginBottom + '" ' +
+                    'justify="center"' +
+                    '></tiptap-interactive-image-upload-inline>'
+            var imageWrapper = document.createElement('span')
+            imageWrapper.innerHTML = imageHTML
             item.parentElement.replaceWith(imageWrapper)
+          }
+        })
+        return wrapper.innerHTML
+      },
+      convertHTMLKatexToInteractive(string) {
+        // var wrapper = document.createElement('div')
+        // wrapper.innerHTML = string
+        // let katexes = wrapper.querySelectorAll('div[katex="true"]')
+        // katexes.forEach(item => {
+        //   let katexHTML = '<tiptap-interactive-katex katex="' + item.innerHTML.slice(1, -1) + '"></tiptap-interactive-katex>'
+        //
+        //   var doc = new DOMParser().parseFromString(katexHTML, "text/xml");
+        //   item.replaceWith(doc.firstChild)
+        // })
+
+        string = string.replaceAll('\\[ ', '\\[')
+        string = string.replaceAll(' \\]', ' \\]')
+        string = string.replaceAll(' $', '$')
+        string = string.replaceAll('$ ', '$')
+
+        let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms;
+        string = string.replace(regex, (match) => {
+          let finalMatch
+          if (match.includes('$$')) {
+            finalMatch = match.slice(2, -2)
+          } else if (match.includes('$')) {
+            finalMatch = match.slice(1, -1)
           } else {
-            item.replaceWith(imageWrapper)
+            finalMatch = match.slice(2, -2)
           }
-        }
-      })
-      return wrapper.innerHTML
-    },
-    convertHTMLImageToInlineInteractive(string) {
-      var wrapper = document.createElement('div')
-      wrapper.innerHTML = string
-      let imagesParent = wrapper.querySelectorAll('span img')
-      imagesParent.forEach(item => {
-        let imageHTML = item.attributes[0].nodeValue
-        if (imageHTML) {
-          let marginBottom = 0
-          if (item.style.marginBottom) {
-            marginBottom = item.style.marginBottom.slice(0, -2)
-          }
-          imageHTML =
-              '<tiptap-interactive-image-upload-inline' +
-              ' url="' + item.attributes['src'].nodeValue + '" ' +
-              'width="' + item.attributes['width'].nodeValue + '" ' +
-              'height="' + item.attributes['height'].nodeValue + '" ' +
-              'vertical="' + marginBottom + '" ' +
-              'justify="center"' +
-              '></tiptap-interactive-image-upload-inline>'
-          var imageWrapper = document.createElement('span')
-          imageWrapper.innerHTML = imageHTML
-          item.parentElement.replaceWith(imageWrapper)
-        }
-      })
-      return wrapper.innerHTML
-    },
-    convertHTMLKatexToInteractive(string) {
-      // var wrapper = document.createElement('div')
-      // wrapper.innerHTML = string
-      // let katexes = wrapper.querySelectorAll('div[katex="true"]')
-      // katexes.forEach(item => {
-      //   let katexHTML = '<tiptap-interactive-katex katex="' + item.innerHTML.slice(1, -1) + '"></tiptap-interactive-katex>'
-      //
-      //   var doc = new DOMParser().parseFromString(katexHTML, "text/xml");
-      //   item.replaceWith(doc.firstChild)
-      // })
+          return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
+        })
+        return string
 
-      string = string.replaceAll('\\[ ', '\\[')
-      string = string.replaceAll(' \\]', ' \\]')
-      string = string.replaceAll(' $', '$')
-      string = string.replaceAll('$ ', '$')
-
-      let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms;
-      string = string.replace(regex, (match) => {
-        let finalMatch
-        if (match.includes('$$')) {
-          finalMatch = match.slice(2, -2)
-        } else if (match.includes('$')) {
-          finalMatch = match.slice(1, -1)
-        } else {
-          finalMatch = match.slice(2, -2)
-        }
-        return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
-      })
-      return string
-
-    },
-  }
+      },
+    }
 }
 </script>
 
