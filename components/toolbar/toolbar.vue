@@ -413,17 +413,6 @@
       </li>
       <li>
         <div
-          v-tooltip="'Paste'"
-          class="toolbar-item"
-          @click="paste"
-        >
-          <span
-            class="mdi mdi-content-paste toolbar-item-icon"
-          />
-        </div>
-      </li>
-      <li>
-        <div
           v-tooltip="'Poem'"
           class="toolbar-item"
           @click="insertPoem"
@@ -451,11 +440,12 @@
             @click="dialog = true"
         >
           <span
-            class="mdi mdi-information-outline"
+            class="mdi mdi-information-outline toolbar-item-icon"
           />
         </div>
       </li>
     </ul>
+    <interactive-info-table @closedialog="dialog = false" :dialog="dialog"></interactive-info-table>
   </div>
 </template>
 
@@ -510,7 +500,8 @@ export default {
   },
   data() {
     return {
-      poemCom: '<p style="color: red;">test</p>'
+      poemCom: '<p style="color: red;">test</p>',
+      dialog: false
     }
   },
   props: {
