@@ -287,6 +287,9 @@ export default {
 </script>
 
 <style scoped>
+.text-center {
+  text-align: center !important;
+}
 .modal {
   position: fixed;
   z-index: 1;
