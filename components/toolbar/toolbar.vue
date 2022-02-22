@@ -452,16 +452,8 @@
 <script>
 import InteractiveInfoTable from '../tipTapInteractiveInfoTable';
 
-import {
-  // Directives
-  VTooltip,
-  VClosePopper,
-  // Components
-  Dropdown,
-  Tooltip,
-  Menu
-} from 'v-tooltip'
-import 'v-tooltip/dist/v-tooltip.css'
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css'; // optional for styling
 import '../../css/toolbar-Item.scss'
 import {DOMParser} from 'prosemirror-model'
 
@@ -485,24 +477,16 @@ function insertHTML({state, view}, value) {
 export default {
   name: 'Toolbar',
   components: {
-    InteractiveInfoTable,
-    // eslint-disable-next-line vue/no-unused-components
-    Dropdown,
-    // eslint-disable-next-line vue/no-unused-components
-    Tooltip,
-    // eslint-disable-next-line vue/no-reserved-component-names,vue/no-unused-components
-    Menu
-    // DynamicTable,
-  },
-  directives: {
-    'tooltip': VTooltip,
-    'close-popper': VClosePopper
+    InteractiveInfoTable
   },
   data() {
     return {
       poemCom: '<p style="color: red;">test</p>',
       dialog: false
     }
+  },
+  mounted() {
+    this.setAllTooltips()
   },
   props: {
     editor: {
@@ -635,6 +619,25 @@ export default {
         return string
 
       },
+    setAllTooltips(){
+      let that = this
+      var toolbarItems = this.getAllToolbarItems()
+      toolbarItems.forEach(function(item) {
+        var name = that.getToolbarItemName(item.id)
+        that.setTippyForEl(item.id , name)
+      })
+    },
+    getAllToolbarItems(){
+      return document.querySelectorAll('li .toolbar-item')
+    },
+    getToolbarItemName(itemId){
+      return itemId.replace('toolbar-item-', '').replace('-' , ' ')
+    },
+    setTippyForEl(itemId , content){
+      tippy('#' + itemId , {
+        content: content,
+      })
+    }
     }
 }
 </script>
