@@ -104,7 +104,7 @@ const mixinConvertToTiptap = {
         },
         convertHTMLKatexToInteractive(string) {
             string = string.replaceAll('\\[ ', '\\[')
-            string = string.replaceAll(' \\]', ' \\]')
+            string = string.replaceAll(' \\]', '\\]')
             string = string.replaceAll(' $', '$')
             string = string.replaceAll('$ ', '$')
 

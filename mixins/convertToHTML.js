@@ -107,7 +107,7 @@ const mixinConvertToHTML = {
                 if (interactiveImage) {
                     //create img tag and set its attrs
                     interactiveImage =
-                        '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" style="margin-bottom: ' + item.attributes['vertical'].nodeValue + 'px;" />'
+                        '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" style="margin-bottom: ' + item.attributes['vertical'].nodeValue + 'px; margin-top: ' + -1 * item.attributes['vertical'].nodeValue + 'px" />'
                     //create img parent and set the display settings and justify the image
                     var imageWrapper = document.createElement('span')
                     imageWrapper.style.display = 'inline-block'
