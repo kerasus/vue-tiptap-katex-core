@@ -505,14 +505,6 @@ export default {
     }
   },
   props: {
-    accessToken: {
-      type: String,
-      default: ''
-    },
-    uploadUrl: {
-      type: String,
-      default: ''
-    },
     editor: {
       type: Object,
       default: () => {
@@ -529,10 +521,10 @@ export default {
   },
   computed: {
     tiptapInteractiveImageUpload() {
-      return '<tiptap-interactive-image-upload token="' + this.accessToken + '" upload="' + this.uploadUrl + '"></tiptap-interactive-image-upload>'
+      return '<tiptap-interactive-image-upload></tiptap-interactive-image-upload>'
     },
     tiptapInteractiveImageUploadInline() {
-      return '<tiptap-interactive-image-upload-inline token="' + this.accessToken + '" upload="' + this.uploadUrl + '"></tiptap-interactive-image-upload-inline>'
+      return '<tiptap-interactive-image-upload-inline></tiptap-interactive-image-upload-inline>'
     }
   },
   methods: {
