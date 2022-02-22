@@ -370,7 +370,6 @@
       <!--      </li>-->
       <li>
         <div
-          v-tooltip="'Image'"
           class="toolbar-item"
           id="toolbar-item-Image"
           @click="editor.chain().focus().insertContent(tiptapInteractiveImageUploadInline).run()"
