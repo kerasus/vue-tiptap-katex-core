@@ -3,13 +3,11 @@
     v-if="editor"
     class="tiptap-toolbar"
   >
-    <!--    <mdicon name="react" />-->
-
-    <!--    https://github.com/Akryum/v-tooltip        tooltip package ToDo-->
+    <!--        IMPORTANT : EACH TOOLBAR ITEM'S ID SHOULD BE IN THIS FORM : toolbar-item-(if more than 2 words , use "-") -->
     <ul>
       <li>
         <div
-          v-tooltip="'Paragraph'"
+          id="toolbar-item-Paragraph"
           class="toolbar-item"
           @click="editor.chain().focus().setParagraph().run()"
         >
@@ -20,7 +18,7 @@
       </li>
       <li>
         <div
-          v-tooltip="'Heading 1'"
+          id="toolbar-item-Heading-1"
           class="toolbar-item"
           @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
         >
@@ -31,7 +29,7 @@
       </li>
       <li>
         <div
-          v-tooltip="'Heading 2'"
+          id="toolbar-item-Heading-2"
           class="toolbar-item"
           @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         >
@@ -42,8 +40,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Heading 3'"
           class="toolbar-item"
+          id="toolbar-item-Heading-3"
           @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
         >
           <span
@@ -53,8 +51,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Heading 4'"
           class="toolbar-item"
+          id="toolbar-item-Heading-4"
           @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
         >
           <span
@@ -64,8 +62,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Heading 5'"
           class="toolbar-item"
+          id="toolbar-item-Heading-5"
           @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
         >
           <span
@@ -75,8 +73,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Heading 6'"
           class="toolbar-item"
+          id="toolbar-item-Heading-6"
           @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
         >
           <span
@@ -89,8 +87,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Bold'"
           class="toolbar-item"
+          id="toolbar-item-Bold"
           @click="editor.chain().focus().toggleBold().run()"
         >
           <span
@@ -100,7 +98,7 @@
       </li>
       <li>
         <div
-          v-tooltip="'Italic'"
+          id="toolbar-item-Italic"
           class="toolbar-item"
           @click="editor.chain().focus().toggleItalic().run()"
         >
@@ -111,8 +109,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Underline'"
           class="toolbar-item"
+          id="toolbar-item-Underline"
           @click="editor.chain().focus().toggleUnderline().run()"
         >
           <span
@@ -122,8 +120,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Line Through'"
           class="toolbar-item"
+          id="toolbar-item-Line-Through"
           @click="editor.chain().focus().toggleStrike().run()"
         >
           <span
@@ -133,8 +131,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Highlight'"
           class="toolbar-item"
+          id="toolbar-item-Highlight"
           @click="editor.chain().focus().toggleHighlight().run()"
         >
           <span
@@ -147,8 +145,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Align Right'"
           class="toolbar-item"
+          id="toolbar-item-Align-Right"
           @click="justify('right')"
         >
           <span
@@ -158,8 +156,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Align Center'"
           class="toolbar-item"
+          id="toolbar-item-Align-Center"
           @click="justify('center')"
         >
           <span
@@ -169,8 +167,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Align Left'"
           class="toolbar-item"
+          id="toolbar-item-Align-Left"
           @click="justify('left')"
         >
           <span
@@ -180,8 +178,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Align Justify'"
           class="toolbar-item"
+          id="toolbar-item-Align-Justify"
           @click="editor.chain().focus().setTextAlign('justify').run()"
         >
           <span
@@ -194,8 +192,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Text rtl'"
           class="toolbar-item"
+          id="toolbar-item-Text-rtl"
           @click="editor.chain().focus().setTextDirection('rtl').run()"
         >
           <span
@@ -205,8 +203,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Text ltr'"
           class="toolbar-item"
+          id="toolbar-item-Text-ltr"
           @click="editor.chain().focus().setTextDirection('ltr').run()"
         >
           <span
@@ -219,8 +217,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Unordered List'"
           class="toolbar-item"
+          id="toolbar-item-Unordered-List"
           @click="editor.chain().focus().toggleBulletList().run()"
         >
           <span
@@ -230,8 +228,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Ordered List'"
           class="toolbar-item"
+          id="toolbar-item-Ordered-List"
           @click="editor.chain().focus().toggleOrderedList().run()"
         >
           <span
@@ -244,8 +242,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Break'"
           class="toolbar-item"
+          id="toolbar-item-Break"
           @click="editor.chain().focus().setHardBreak().run()"
         >
           <span
@@ -255,8 +253,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Horizontal Divider'"
           class="toolbar-item"
+          id="toolbar-item-Horizontal-Divider"
           @click="editor.chain().focus().setHorizontalRule().run()"
         >
           <span
@@ -269,8 +267,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Table'"
           class="toolbar-item"
+          id="toolbar-item-Table"
           @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()"
         >
           <span
@@ -285,8 +283,8 @@
     >-->
       <li v-if="editor.can().mergeCells()">
         <div
-          v-tooltip="'Merge Cells'"
           class="toolbar-item"
+          id="toolbar-item-Merge-Cells"
           @click="editor.chain().focus().mergeCells().run()"
         >
           <span
@@ -296,8 +294,8 @@
       </li>
       <li v-if="editor.can().splitCell()">
         <div
-          v-tooltip="'Split Cells'"
           class="toolbar-item"
+          id="toolbar-item-Split-Cells"
           @click="editor.chain().focus().splitCell().run()"
         >
           <span
@@ -307,8 +305,8 @@
       </li>
       <li v-if="editor.can().addColumnAfter()">
         <div
-          v-tooltip="'Add Column'"
           class="toolbar-item"
+          id="toolbar-item-Add-Column"
           @click="editor.chain().focus().addColumnAfter().run()"
         >
           <span
@@ -318,8 +316,8 @@
       </li>
       <li v-if="editor.can().addRowAfter()">
         <div
-          v-tooltip="'Add Row'"
           class="toolbar-item"
+          id="toolbar-item-Add-Row"
           @click="editor.chain().focus().addRowAfter().run()"
         >
           <span
@@ -329,8 +327,8 @@
       </li>
       <li v-if="editor.can().deleteColumn()">
         <div
-          v-tooltip="'Delete Column'"
           class="toolbar-item"
+          id="toolbar-item-Delete-Column"
           @click="editor.chain().focus().deleteColumn().run()"
         >
           <span
@@ -340,8 +338,8 @@
       </li>
       <li v-if="editor.can().deleteRow()">
         <div
-          v-tooltip="'Delete Row'"
           class="toolbar-item"
+          id="toolbar-item-Delete-Row"
           @click="editor.chain().focus().deleteRow().run()"
         >
           <span
@@ -351,8 +349,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Add Formula'"
           class="toolbar-item"
+          id="toolbar-item-Add-Formula"
           @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline> ').run()"
         >
           <span
@@ -372,8 +370,8 @@
       <!--      </li>-->
       <li>
         <div
-          v-tooltip="'Image'"
           class="toolbar-item"
+          id="toolbar-item-Image"
           @click="editor.chain().focus().insertContent(tiptapInteractiveImageUploadInline).run()"
         >
           <span
@@ -391,8 +389,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Redo'"
           class="toolbar-item"
+          id="toolbar-item-Redo"
           @click="editor.chain().focus().redo().run()"
         >
           <span
@@ -402,8 +400,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Undo'"
           class="toolbar-item"
+          id="toolbar-item-Undo"
           @click="editor.chain().focus().undo().run()"
         >
           <span
@@ -413,8 +411,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Poem'"
           class="toolbar-item"
+          id="toolbar-item-Poem"
           @click="insertPoem"
         >
           <span
@@ -424,8 +422,8 @@
       </li>
       <li>
         <div
-          v-tooltip="'Reading'"
           class="toolbar-item"
+          id="toolbar-item-Reading"
           @click="editor.chain().focus().insertContent('<tiptap-interactive-reading>Type Here</tiptap-interactive-reading>').run()"
         >
           <span
@@ -435,9 +433,9 @@
       </li>
       <li>
         <div
-          v-tooltip="'Help Me'"
           class="toolbar-item"
-            @click="dialog = true"
+          id="toolbar-item-Help-Me"
+          @click="dialog = true"
         >
           <span
             class="mdi mdi-information-outline toolbar-item-icon"
