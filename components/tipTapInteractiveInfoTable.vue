@@ -1,23 +1,22 @@
 <template>
   <div>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="500"
+    <div
+        v-if="dialog"
+        id="myModal"
+        class="modal"
+        @click="closeModalWhenClickedOutside"
     >
-      <div class="grey lighten-2 text-start">
-        <v-btn
-          fab
-          small
-          plain
-          @click="closeDialog"
-        >
-          <v-icon>mdi-window-close</v-icon>
-        </v-btn>
-      </div>
-      <v-simple-table dense>
-        <template v-slot:default>
-          <thead>
+      <div class="modal-content">
+        <div>
+          <span
+              class="close"
+              @click="closeDialog"
+          >
+            &times;
+          </span>
+        </div>
+        <div>
+          <table>
             <tr>
               <th class="text-center">
                 Short Key
@@ -26,23 +25,24 @@
                 Result
               </th>
             </tr>
-          </thead>
-          <tbody>
             <tr
-              v-for="(item, index) in renderedShortKeys"
-              :key="index"
+                v-for="(item, index) in renderedShortKeys"
+                :key="index"
             >
               <td class="text-center">
                 <div
-                  v-for="(img, index) in renderShortKeysImages(item.shortKey)"
-                  :key="index"
+                    v-for="(img, index) in renderShortKeysImages(item.shortKey)"
+                    :key="index"
                 >
                   <div style="float: left">
-                    <img :src="img">
+                    <img
+                        :src="img"
+                        width="50"
+                    >
                   </div>
                   <div
-                    v-if="index < renderShortKeysImages(item.shortKey).length - 1"
-                    style="float: left; position: relative; top: 7px;"
+                      v-if="index < renderShortKeysImages(item.shortKey).length - 1"
+                      style="float: left; position: relative; top: 7px;"
                   >
                     +
                   </div>
@@ -50,14 +50,14 @@
               </td>
               <td class="text-center">
                 <div
-                  v-html="renderItems(item.insert)"
+                    v-html="renderItems(item.insert)"
                 />
               </td>
             </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </v-dialog>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -67,7 +67,7 @@ import katex from 'katex'
 import {katexShortkeys} from './formula/KatexShortkeys'
 
 export default {
-  name: 'InteractiveInfoTable',
+  name: 'InfoTable',
   props: {
     dialog: {
       type: Boolean,
@@ -78,7 +78,7 @@ export default {
     return {
       renderedShortKeys: [],
       shortKeyImages: [],
-      keyBoardKeys:{
+      keyBoardKeys: {
         space: 'images/keyBoardKeys/space.png',
         ctrl: 'images/keyBoardKeys/ctrl.png',
         alt: 'images/keyBoardKeys/alt.png',
@@ -128,6 +128,8 @@ export default {
     this.renderedShortKeys = katexShortkeys
     this.renderShortKeysImages('ctrl+alt+[KeyT]]')
     // console.log(this.shortKeyImages)
+  },
+  mounted() {
   },
   computed: {
     renderItems() {
@@ -271,18 +273,71 @@ export default {
 
   },
   methods: {
-    closeDialog () {
+    closeDialog() {
       this.$emit('closedialog')
-    }
+    },
+    closeModalWhenClickedOutside(event) {
+      let modal = document.getElementById('myModal');
+      if (event.target === modal) {
+        this.closeDialog()
+      }
+    },
   }
 }
 </script>
 
 <style scoped>
- .text-center img {
-   width: 50px;
- }
- .v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td{
-   font-size: 1.3em;
- }
+.text-center {
+  text-align: center !important;
+}
+.modal {
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 530px;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 510px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 </style>
