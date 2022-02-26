@@ -1,7 +1,7 @@
 import katex from 'katex'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard'
 import {katexShortkeys} from './KatexShortkeys'
-import { MathfieldElement } from '../../Mathlive'
+import { MathfieldElement } from 'vue-tiptap-katex-core/Mathlive'
 
 
 const MixinComponentFormula = {
