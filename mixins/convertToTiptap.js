@@ -84,8 +84,8 @@ const mixinConvertToTiptap = {
                 let imageHTML = item.attributes[0].nodeValue
                 if (imageHTML) {
                     let marginBottom = 0
-                    if (item.style.marginBottom) {
-                        marginBottom = item.style.marginBottom.slice(0, -2)
+                    if (item.style.top) {
+                        marginBottom = item.style.top.slice(0, -2)
                     }
                     imageHTML =
                         '<tiptap-interactive-image-upload-inline' +
