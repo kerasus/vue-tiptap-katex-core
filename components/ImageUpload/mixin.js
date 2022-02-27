@@ -43,6 +43,11 @@ const MixinComponentImageUpload = {
                 width: event.width,
                 height: event.height
             })
+            if (this.editor.editorOptions.onResizeEnd) {
+                this.updateAttributes({
+                    url: this.editor.editorOptions.onResizeEnd(this.node.attrs.url, event.width, event.height)
+                })
+            }
         },
         dragEnd (event) {
             this.updateAttributes({

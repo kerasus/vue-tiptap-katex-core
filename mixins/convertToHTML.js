@@ -78,19 +78,17 @@ const mixinConvertToHTML = {
                 if (interactiveImage) {
                     //create img tag and set its attrs
                     interactiveImage =
-                        `<img src="${item.attributes['url'].nodeValue}" width="${item.attributes['width'].nodeValue}" height="${item.attributes['height'].nodeValue}" style="position: relative; top: ${item.attributes['vertical'].nodeValue}px; margin-right: 10px; margin-left: 10px;" />`
+                        `<img src="${item.attributes['url'].nodeValue}" width="${item.attributes['width'].nodeValue}" height="${item.attributes['height'].nodeValue}" style="position: relative; top: ${item.attributes['vertical'].nodeValue}px;" />`
                     //create img parent and set the display settings and justify the image
                     var imageWrapper = document.createElement('span')
-                    imageWrapper.style = {
-                        display: 'inline-block',
-                        width: item.attributes['width'].nodeValue + 'px',
-                        height: item.attributes['height'].nodeValue + 'px',
-                        position: 'relative',
-                        marginTop: -1 * item.attributes['vertical'].nodeValue + 'px',
-                        marginRight: '10px',
-                        marginBottom: item.attributes['vertical'].nodeValue + 'px',
-                        marginLeft: '10px'
-                    }
+                    imageWrapper.style.display = 'inline-block'
+                    imageWrapper.style.width = item.attributes['width'].nodeValue + 'px'
+                    imageWrapper.style.height = item.attributes['height'].nodeValue + 'px'
+                    imageWrapper.style.position = 'relative'
+                    imageWrapper.style.marginTop = -1 * item.attributes['vertical'].nodeValue + 'px'
+                    imageWrapper.style.marginRight = '10px'
+                    imageWrapper.style.marginBottom = item.attributes['vertical'].nodeValue + 'px'
+                    imageWrapper.style.marginLeft = '10px'
                     imageWrapper.innerHTML = interactiveImage
                     item.replaceWith(imageWrapper)
                 }
