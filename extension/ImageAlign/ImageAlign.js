@@ -2,10 +2,12 @@ import { Extension } from '@tiptap/core';
 
 const ImageAlign = Extension.create({
     name: 'imageAlign',
-    defaultOptions: {
-        types: ['TiptapInteractiveImageUpload'],
-        alignments: ['left', 'center', 'right'],
-        defaultAlignment: '',
+    addOptions () {
+        return {
+            types: ['TiptapInteractiveImageUpload'],
+            alignments: ['left', 'center', 'right'],
+            defaultAlignment: ''
+        }
     },
     addGlobalAttributes() {
         return [
