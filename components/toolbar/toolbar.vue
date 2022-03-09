@@ -484,7 +484,7 @@ export default {
     }
   },
   mounted() {
-    this.setAllTooltips()
+    // this.setAllTooltips()
   },
   props: {
     editor: {
