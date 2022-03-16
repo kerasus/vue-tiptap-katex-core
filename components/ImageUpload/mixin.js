@@ -12,11 +12,17 @@ const MixinComponentImageUpload = {
     methods: {
         setNaturalSize () {
             if (this.node.attrs.url) {
+                const node = this.node
                 let img = new Image();
                 let that = this
                 img.onload = function () {
-                    that.naturalHeight = img.naturalHeight
-                    that.naturalWidth = img.naturalWidth
+                    if (node.attrs.width && node.attrs.height) {
+                        that.naturalHeight = node.attrs.height
+                        that.naturalWidth = node.attrs.width
+                    } else {
+                        that.naturalHeight = img.naturalHeight
+                        that.naturalWidth = img.naturalWidth
+                    }
                 };
                 img.src = this.node.attrs.url
             }
