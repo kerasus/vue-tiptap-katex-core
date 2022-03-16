@@ -120,6 +120,7 @@ const mixinConvertToTiptap = {
                 } else {
                     finalMatch = match.slice(2, -2)
                 }
+                finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>').replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
             })
             return string
