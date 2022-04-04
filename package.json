@@ -1,6 +1,6 @@
 {
   "name": "vue-tiptap-katex-core",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "core of tiptap editor",
   "main": "index.js",
   "keywords": [
