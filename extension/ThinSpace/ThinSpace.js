@@ -1,6 +1,7 @@
 import {Extension} from '@tiptap/core';
 
 const ThinSpace = Extension.create({
+    name: 'ThinSpace',
     addKeyboardShortcuts() {
         return {
             // ↓ your new keyboard shortcut
