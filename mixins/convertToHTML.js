@@ -2,6 +2,13 @@ const mixinConvertToHTML = {
     methods: {
         convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
             try {
+                if (string.length < 30) {
+                    let div = document.createElement('div')
+                    div.innerHTML = string.trim()
+                    if (div.firstChild.innerHTML === '') {
+                        return ''
+                    }
+                }
                 string = this.convertInteractivePoemToHTML(string)
                 string = this.convertInlineInteractiveImagesToHTML(string)
                 string = this.convertInteractiveIKatexToHTML(string)
