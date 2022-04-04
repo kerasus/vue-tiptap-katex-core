@@ -2,6 +2,7 @@ import {Extension} from '@tiptap/core';
 import mixinConvertToTiptap from '../../mixins/convertToTiptap';
 
 const Shortkeys = Extension.create({
+    name: 'customShortkeys',
     addKeyboardShortcuts() {
         return {
             // Paste Shortkey
