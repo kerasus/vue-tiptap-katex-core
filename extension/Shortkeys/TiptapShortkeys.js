@@ -8,8 +8,12 @@ const Shortkeys = Extension.create({
             // Paste Shortkey
             'Mod-Shift-v': () => navigator.clipboard.readText()
                 .then(text => {
-                    let string = mixinConvertToTiptap.methods.convertToTiptap(text)
-                    this.editor.commands.insertContent(string)
+                    let splited_string = text.split(/\r?\n/)
+                    splited_string.forEach(s => {
+                        let string = mixinConvertToTiptap.methods.convertToTiptap(s)
+                        this.editor.commands.insertContent('<p dir="auto">' + string + '</p>')
+                    })
+
                 })
                 .catch(err => {
                     console.error('Failed to read clipboard contents: ', err);
