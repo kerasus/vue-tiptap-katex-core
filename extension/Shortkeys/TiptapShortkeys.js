@@ -8,11 +8,23 @@ const Shortkeys = Extension.create({
             // Paste Shortkey
             'Mod-Shift-v': () => navigator.clipboard.readText()
                 .then(text => {
-                    let splited_string = text.split(/\r?\n/)
-                    splited_string.forEach(s => {
-                        let string = mixinConvertToTiptap.methods.convertToTiptap(s)
-                        this.editor.commands.insertContent('<p dir="auto">' + string + '</p>')
+                    let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms
+                    let counter = 0
+                    let formulas = []
+                    text = text.replace(regex, match => {
+                        formulas.push(match)
+                        return '<UniqueFormulaPlaceholder>' + counter++ + '</UniqueFormulaPlaceholder>'
                     })
+                    let splited_string = text.split(/\r?\n/)
+                    for (let i = 0; i < splited_string.length; i++) {
+                        splited_string[i] = '<p dir="auto">' + splited_string[i] + '</p>'
+                    }
+                    let str = splited_string.join('')
+                    for (let i = 0; i < formulas.length; i++) {
+                        str = str.replace('<UniqueFormulaPlaceholder>' + i + '</UniqueFormulaPlaceholder>', formulas[i])
+                    }
+                    let string = mixinConvertToTiptap.methods.convertToTiptap(str)
+                    this.editor.commands.insertContent(string)
 
                 })
                 .catch(err => {
