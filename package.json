@@ -1,6 +1,6 @@
 {
   "name": "vue-tiptap-katex-core",
-  "version": "1.0.3",
+  "version": "1.0.20",
   "description": "core of tiptap editor",
   "main": "index.js",
   "keywords": [
@@ -54,17 +54,18 @@
     "cropperjs": "^1.5.11",
     "css-loader": "^3.6.0",
     "katex": "^0.15.2",
-    "node-sass": "^6.0.0",
+    "mathlive": "^0.69.10",
+    "node-sass": "^7.0.1",
     "persian-katex-plugin": "^1.1.0",
     "postcss-loader": "^4.2.0",
-    "sass-loader": "^10.1.1",
+    "sass-loader": "^12.6.0",
+    "tippy.js": "^6.3.7",
     "tiptap-extensions": "^1.35.2",
     "tiptap-text-direction-extension": "^1.0.2",
     "turndown": "^7.0.0",
     "vue-drag-resize": "^1.5.4",
     "vue-notification": "^1.3.20",
-    "vue-upload-component": "^2.8.22",
-    "webpack": "<=4"
+    "vue-upload-component": "^2.8.22"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -7,6 +7,7 @@ const mixinConvertToTiptap = {
     methods: {
         convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
             string = string.replaceAll('¬', '&#8202;')
+            string = string.replaceAll('­', '&#8202;')
             string = this.convertHTMLKatexToInteractive(string)
             string = this.convertHTMLReadingToInteractive(string)
             string = this.convertHTMLImageToInlineInteractive(string)
@@ -84,8 +85,8 @@ const mixinConvertToTiptap = {
                 let imageHTML = item.attributes[0].nodeValue
                 if (imageHTML) {
                     let marginBottom = 0
-                    if (item.style.marginBottom) {
-                        marginBottom = item.style.marginBottom.slice(0, -2)
+                    if (item.style.top) {
+                        marginBottom = item.style.top.slice(0, -2)
                     }
                     imageHTML =
                         '<tiptap-interactive-image-upload-inline' +
@@ -104,7 +105,7 @@ const mixinConvertToTiptap = {
         },
         convertHTMLKatexToInteractive(string) {
             string = string.replaceAll('\\[ ', '\\[')
-            string = string.replaceAll(' \\]', ' \\]')
+            string = string.replaceAll(' \\]', '\\]')
             string = string.replaceAll(' $', '$')
             string = string.replaceAll('$ ', '$')
 
@@ -119,6 +120,7 @@ const mixinConvertToTiptap = {
                 } else {
                     finalMatch = match.slice(2, -2)
                 }
+                finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>').replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
             })
             return string

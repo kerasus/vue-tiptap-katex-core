@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import '@/css/toolbar-Item.scss'
+import '../css/toolbar-Item.scss'
 export default {
   name: 'SlotFloatingMenu',
   props: {

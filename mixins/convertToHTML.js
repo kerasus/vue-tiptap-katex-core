@@ -2,9 +2,15 @@ const mixinConvertToHTML = {
     methods: {
         convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
             try {
+                if (string.length < 30) {
+                    let div = document.createElement('div')
+                    div.innerHTML = string.trim()
+                    if (div.firstChild.innerHTML === '') {
+                        return ''
+                    }
+                }
                 string = this.convertInteractivePoemToHTML(string)
                 string = this.convertInlineInteractiveImagesToHTML(string)
-                string = this.convertInteractiveImagesToHTML(string)
                 string = this.convertInteractiveIKatexToHTML(string)
                 string = this.convertInteractiveReadingToHTML(string)
                 string = this.tableColWidthStyle(string)
@@ -19,8 +25,6 @@ const mixinConvertToHTML = {
                 console.log(e)
                 return false
             }
-
-
             return string
         },
         tableColWidthStyle (string) {
@@ -72,32 +76,6 @@ const mixinConvertToHTML = {
             })
             return wrapper.innerHTML
         },
-        convertInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
-            var wrapper = document.createElement('div')
-            wrapper.innerHTML = string
-            let images = wrapper.querySelectorAll('tiptap-interactive-image-upload')
-            images.forEach(item => {
-                let interactiveImage = item.attributes[0].nodeValue
-                if (interactiveImage) {
-                    //create img tag and set its attrs
-                    interactiveImage =
-                        '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" />'
-                    //create img parent and set the display settings and justify the image
-                    var imageWrapper = document.createElement('div')
-                    imageWrapper.innerHTML = interactiveImage
-                    imageWrapper.style.display = 'flex'
-                    if (item.attributes['justify'].nodeValue === 'right') {
-                        imageWrapper.style.justifyContent = 'flex-start'
-                    } else if (item.attributes['justify'].nodeValue === 'center') {
-                        imageWrapper.style.justifyContent = 'center'
-                    } else if (item.attributes['justify'].nodeValue === 'left') {
-                        imageWrapper.style.justifyContent = 'flex-end'
-                    }
-                    item.replaceWith(imageWrapper)
-                }
-            })
-            return wrapper.innerHTML
-        },
         convertInlineInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
             var wrapper = document.createElement('div')
             wrapper.innerHTML = string
@@ -107,11 +85,17 @@ const mixinConvertToHTML = {
                 if (interactiveImage) {
                     //create img tag and set its attrs
                     interactiveImage =
-                        '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" style="margin-bottom: ' + item.attributes['vertical'].nodeValue + 'px;" />'
+                        `<img src="${item.attributes['url'].nodeValue}" width="${item.attributes['width'].nodeValue}" height="${item.attributes['height'].nodeValue}" style="position: relative; top: ${item.attributes['vertical'].nodeValue}px;" />`
                     //create img parent and set the display settings and justify the image
                     var imageWrapper = document.createElement('span')
                     imageWrapper.style.display = 'inline-block'
+                    imageWrapper.style.width = item.attributes['width'].nodeValue + 'px'
                     imageWrapper.style.height = item.attributes['height'].nodeValue + 'px'
+                    imageWrapper.style.position = 'relative'
+                    imageWrapper.style.marginTop = -1 * item.attributes['vertical'].nodeValue + 'px'
+                    imageWrapper.style.marginRight = '10px'
+                    imageWrapper.style.marginBottom = item.attributes['vertical'].nodeValue + 'px'
+                    imageWrapper.style.marginLeft = '10px'
                     imageWrapper.innerHTML = interactiveImage
                     item.replaceWith(imageWrapper)
                 }
