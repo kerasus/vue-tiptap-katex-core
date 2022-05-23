@@ -13,8 +13,8 @@ export const katexShortkeys = [
         insert: '\\enspace'
     },
     {
-      class: 'math',
-      shortKey: 'ctrl+shift+[KeyF]',
+        class: 'math',
+        shortKey: 'ctrl+shift+[KeyF]',
         insert: '\\times'
     },
     {
@@ -25,12 +25,12 @@ export const katexShortkeys = [
     {
         class: 'math',
         shortKey: 'ctrl+alt+[KeyT]]',
-        insert: '\\Box^\\text{text}'
+        insert: '{#0}^\\text{text}'
     },
     {
         class: 'math',
         shortKey: 'ctrl+alt+[KeyA]',
-        insert: '\\mathop {\\Box}\\limits^\\Delta'
+        insert: '\\mathop {#0}\\limits^\\Delta'
     },
     {
         class: 'math',
@@ -40,17 +40,17 @@ export const katexShortkeys = [
     {
         class: 'math',
         shortKey: 'ctrl+[KeyH]',
-        insert: '2^2'
+        insert: '#0^(#?)'
     },
     {
         class: 'math',
         shortKey: 'ctrl+[KeyL]',
-        insert: '2_4'
+        insert: '#0_(#?)'
     },
     {
         class: 'math',
         shortKey: 'ctrl+[KeyJ]',
-        insert: '{2\\atop 1}H'
+        insert: '{#?\\atop #?}#0'
     },
     {
         class: 'math',
