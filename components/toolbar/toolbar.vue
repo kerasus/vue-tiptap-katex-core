@@ -147,7 +147,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Align-Right"
-            @click="justify('right')"
+            @click="this.editor.chain().focus().setTextAlign('right').run()"
         >
           <span
               class="mdi mdi-format-align-right toolbar-item-icon"
@@ -158,7 +158,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Align-Center"
-            @click="justify('center')"
+            @click="this.editor.chain().focus().setTextAlign('center').run()"
         >
           <span
               class="mdi mdi-format-align-center toolbar-item-icon"
@@ -169,7 +169,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Align-Left"
-            @click="justify('left')"
+            @click="this.editor.chain().focus().setTextAlign('left').run()"
         >
           <span
               class="mdi mdi-format-align-left toolbar-item-icon"
@@ -276,11 +276,6 @@
           />
         </div>
       </li>
-      <!--      <v-tooltip
-      v-if="editor.can().mergeCells()"
-      top
-      ToDo
-    >-->
       <li v-if="editor.can().mergeCells()">
         <div
             class="toolbar-item"
@@ -362,39 +357,24 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Add-Formula"
-            @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline> ').run()"
+            @click="editor.chain().focus().insertContent(`<span data-katex='true'></span> `).run()"
         >
           <span
               class="mdi mdi-sigma  toolbar-item-icon"
           />
         </div>
       </li>
-      <!--      <li>-->
-      <!--        <div-->
-      <!--          class="toolbar-item"-->
-      <!--          @click="editor.chain().focus().mergeCells().run()"-->
-      <!--        >-->
-      <!--          <span-->
-      <!--            class="mdi mdi-sigma  toolbar-item-icon"-->
-      <!--          />-->
-      <!--        </div>-->
-      <!--      </li>-->
       <li>
         <div
             class="toolbar-item"
             id="toolbar-item-Image"
-            @click="editor.chain().focus().insertContent(tiptapInteractiveImageUploadInline).run()"
+            @click="editor.chain().focus().insertContent('<img>').run()"
         >
           <span
               class="mdi mdi-image toolbar-item-icon"
           />
         </div>
       </li>
-      <!--      <v-tooltip
-      v-if="editor.can().addColumnAfter()"
-      top
-      ToDo
-    >-->
       <li>
         <div class="vl" />
       </li>
@@ -424,7 +404,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Poem"
-            @click="insertPoem"
+            @click="editor.chain().focus().insertContent(`<div class='beit'><div class='mesra'></div><div class='mesra'></div></div>`).run()"
         >
           <span
               class="mdi mdi-format-columns toolbar-item-icon"
@@ -435,7 +415,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Reading"
-            @click="editor.chain().focus().insertContent('<tiptap-interactive-reading>Type Here</tiptap-interactive-reading>').run()"
+            @click="editor.chain().focus().insertContent(`<div class='reading-duplicate'>Type Here</div>`).run()"
         >
           <span
               class="mdi mdi-eye-off toolbar-item-icon"
@@ -464,24 +444,8 @@ import InteractiveInfoTable from '../tipTapInteractiveInfoTable';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import '../../css/toolbar-Item.scss'
-import {DOMParser} from 'prosemirror-model'
 
-function elementFromString(value) {
-  const element = document.createElement('div')
-  element.innerHTML = value.trim()
-
-  return element
-}
-
-function insertHTML({state, view}, value) {
-  const {selection} = state
-  const element = elementFromString(value)
-
-  const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
-  const transaction = state.tr.insert(selection.anchor, slice.content)
-
-  view.dispatch(transaction)
-}
+import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap';
 
 export default {
   name: 'Toolbar',
@@ -490,12 +454,12 @@ export default {
   },
   data() {
     return {
-      poemCom: '<p style="color: red;">test</p>',
       dialog: false
     }
   },
+  mixins: [mixinConvertToTiptap],
   mounted() {
-    // this.setAllTooltips()
+    this.setAllTooltips()
   },
   props: {
     editor: {
@@ -512,122 +476,7 @@ export default {
       }
     }
   },
-  computed: {
-    tiptapInteractiveImageUpload() {
-      return '<tiptap-interactive-image-upload></tiptap-interactive-image-upload>'
-    },
-    tiptapInteractiveImageUploadInline() {
-      return '<tiptap-interactive-image-upload-inline></tiptap-interactive-image-upload-inline>'
-    }
-  },
   methods: {
-    insertPoem () {
-      // insertHTML(this.editor, '<ol><li><table class="poem"><tr class="beit"><td class="mesra1">معشوقه به سامان شد تا باد چنین بادا</td><td class="mesra2">کفرش همه ایمان شد تا باد چنین بادا</td></tr></table></ol></li>')
-      insertHTML(this.editor, '<tiptap-interactive-poem><mesra></mesra><mesra></mesra></tiptap-interactive-poem>')
-    },
-    justify (value) {
-      this.editor.chain().focus().setTextAlign(value).run()
-      this.editor.chain().focus().setImageAlign(value).run()
-    },
-    convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
-      string = string.replaceAll('¬', '&#8202;')
-      string = this.convertHTMLImageToInlineInteractive(string)
-      string = this.convertHTMLImageToInteractive(string)
-      string = this.convertHTMLKatexToInteractive(string)
-      return string
-    },
-    convertHTMLImageToInteractive(string) {
-      var wrapper = document.createElement('div')
-      wrapper.innerHTML = string
-      let imagesParent = wrapper.querySelectorAll('img')
-      imagesParent.forEach(item => {
-        let imageHTML = item.attributes[0].nodeValue
-        if (imageHTML) {
-          let justify = 'center'
-          if (item.parentElement.style.display === 'flex') {
-            if (item.parentElement.style.justifyContent === 'flex-start') {
-              justify = 'right'
-            } else if (item.parentElement.style.justifyContent === 'center') {
-              justify = 'center'
-            } else if (item.parentElement.style.justifyContent === 'flex-end') {
-              justify = 'left'
-            }
-          }
-          imageHTML =
-              '<tiptap-interactive-image-upload-inline' +
-              ' url="' + item.attributes['src'].nodeValue + '" ' +
-              'width="' + item.attributes['width'].nodeValue + '" ' +
-              'height="' + item.attributes['height'].nodeValue + '" ' +
-              'justify="' + justify + '"' +
-              '></tiptap-interactive-image-upload-inline>'
-          var imageWrapper = document.createElement('div')
-          imageWrapper.innerHTML = imageHTML
-          if (item.parentElement.style.display === 'flex') {
-            item.parentElement.replaceWith(imageWrapper)
-          } else {
-            item.replaceWith(imageWrapper)
-          }
-        }
-      })
-      return wrapper.innerHTML
-    },
-    convertHTMLImageToInlineInteractive(string) {
-      var wrapper = document.createElement('div')
-      wrapper.innerHTML = string
-      let imagesParent = wrapper.querySelectorAll('span img')
-      imagesParent.forEach(item => {
-        let imageHTML = item.attributes[0].nodeValue
-        if (imageHTML) {
-          let marginBottom = 0
-          if (item.style.marginBottom) {
-            marginBottom = item.style.marginBottom.slice(0, -2)
-          }
-          imageHTML =
-              '<tiptap-interactive-image-upload-inline' +
-              ' url="' + item.attributes['src'].nodeValue + '" ' +
-              'width="' + item.attributes['width'].nodeValue + '" ' +
-              'height="' + item.attributes['height'].nodeValue + '" ' +
-              'vertical="' + marginBottom + '" ' +
-              'justify="center"' +
-              '></tiptap-interactive-image-upload-inline>'
-          var imageWrapper = document.createElement('span')
-          imageWrapper.innerHTML = imageHTML
-          item.parentElement.replaceWith(imageWrapper)
-        }
-      })
-      return wrapper.innerHTML
-    },
-    convertHTMLKatexToInteractive(string) {
-      // var wrapper = document.createElement('div')
-      // wrapper.innerHTML = string
-      // let katexes = wrapper.querySelectorAll('div[katex="true"]')
-      // katexes.forEach(item => {
-      //   let katexHTML = '<tiptap-interactive-katex katex="' + item.innerHTML.slice(1, -1) + '"></tiptap-interactive-katex>'
-      //
-      //   var doc = new DOMParser().parseFromString(katexHTML, "text/xml");
-      //   item.replaceWith(doc.firstChild)
-      // })
-
-      string = string.replaceAll('\\[ ', '\\[')
-      string = string.replaceAll(' \\]', ' \\]')
-      string = string.replaceAll(' $', '$')
-      string = string.replaceAll('$ ', '$')
-
-      let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms;
-      string = string.replace(regex, (match) => {
-        let finalMatch
-        if (match.includes('$$')) {
-          finalMatch = match.slice(2, -2)
-        } else if (match.includes('$')) {
-          finalMatch = match.slice(1, -1)
-        } else {
-          finalMatch = match.slice(2, -2)
-        }
-        return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
-      })
-      return string
-
-    },
     setAllTooltips(){
       let that = this
       var toolbarItems = this.getAllToolbarItems()
