@@ -1,6 +1,9 @@
 const mixinConvertToTiptap = {
     methods: {
         convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
+            if (string === null || typeof string === 'undefined') {
+                return ''
+            }
             string = string.replaceAll('¬', '&#8202;')
             string = string.replaceAll('­', '&#8202;')
             string = this.convertKatex(string)
