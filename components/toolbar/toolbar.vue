@@ -147,7 +147,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Align-Right"
-            @click="this.editor.chain().focus().setTextAlign('right').run()"
+            @click="editor.chain().focus().setTextAlign('right').run()"
         >
           <span
               class="mdi mdi-format-align-right toolbar-item-icon"
@@ -158,7 +158,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Align-Center"
-            @click="this.editor.chain().focus().setTextAlign('center').run()"
+            @click="editor.chain().focus().setTextAlign('center').run()"
         >
           <span
               class="mdi mdi-format-align-center toolbar-item-icon"
@@ -169,7 +169,7 @@
         <div
             class="toolbar-item"
             id="toolbar-item-Align-Left"
-            @click="this.editor.chain().focus().setTextAlign('left').run()"
+            @click="editor.chain().focus().setTextAlign('left').run()"
         >
           <span
               class="mdi mdi-format-align-left toolbar-item-icon"
