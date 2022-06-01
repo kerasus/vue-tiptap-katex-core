@@ -32,13 +32,13 @@ const Shortkeys = Extension.create({
                 }),
 
             'Mod-e': () => {
-                this.editor.chain().focus().insertContent('<tiptap-interactive-poem><mesra></mesra><mesra></mesra></tiptap-interactive-poem>').run()
+                this.editor.chain().focus().insertContent('<div class="bait"><div class="mesra"></div><div class="mesra"></div></div>').run()
             },
 
             // Insert TiptapInteractiveKatex
             'Mod-Alt-q': () => {
                 const SPACE = ' '
-                this.editor.chain().focus().insertContent(`<tiptap-interactive-katex-inline editMode="true" katex="${SPACE}"></tiptap-interactive-katex-inline>${SPACE}`).run()
+                this.editor.chain().focus().insertContent(`<span data-katex="true"></span>${SPACE}`).run()
             },
 
         }
