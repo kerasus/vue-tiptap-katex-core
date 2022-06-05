@@ -400,7 +400,7 @@
           />
         </div>
       </li>
-      <li>
+      <li v-if="editor.editorOptions.poem">
         <div
             class="toolbar-item"
             id="toolbar-item-Poem"
@@ -411,7 +411,7 @@
           />
         </div>
       </li>
-      <li>
+      <li v-if="editor.editorOptions.reading">
         <div
             class="toolbar-item"
             id="toolbar-item-Reading"
