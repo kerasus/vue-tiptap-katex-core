@@ -41,6 +41,10 @@ const Shortkeys = Extension.create({
                 this.editor.chain().focus().insertContent(`<tiptap-interactive-katex-inline editMode="true" katex="${SPACE}"></tiptap-interactive-katex-inline>${SPACE}`).run()
             },
 
+            'Mod-Alt-m': () => {
+                const SPACE = ' '
+                this.editor.chain().focus().insertContent(`<img></img>${SPACE}`).run()
+            }
         }
     }
 })
