@@ -41,6 +41,10 @@ const Shortkeys = Extension.create({
                 this.editor.chain().focus().insertContent(`<span data-katex="true"></span>${SPACE}`).run()
             },
 
+            'Mod-Alt-m': () => {
+                const SPACE = ' '
+                this.editor.chain().focus().insertContent(`<img></img>${SPACE}`).run()
+            }
         }
     }
 })

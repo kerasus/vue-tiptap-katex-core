@@ -113,6 +113,11 @@ export const katexShortkeys = [
         insert: '\\div'
     },
     {
+        class: 'math',
+        shortKey: '[Quote]',
+        insert: '\\prime'
+    },
+    {
         class: 'persian',
         shortKey: '[Digit0]',
         insert: '٠'
