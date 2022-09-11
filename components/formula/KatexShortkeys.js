@@ -35,7 +35,7 @@ export const katexShortkeys = [
     {
         class: 'math',
         shortKey: 'ctrl+[KeyR]',
-        insert: '\\sqrt[]{2}'
+        insert: '\\sqrt[]'
     },
     {
         class: 'math',
