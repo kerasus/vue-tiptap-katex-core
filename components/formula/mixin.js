@@ -2,7 +2,7 @@ import katex from 'katex'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard'
 import {katexShortkeys} from './KatexShortkeys'
 import { MathfieldElement } from 'mathlive'
-
+import mixinConvertToTiptap from '../../mixins/convertToTiptap'
 
 const MixinComponentFormula = {
     props: {
@@ -62,7 +62,8 @@ const MixinComponentFormula = {
             return options
         },
         computedKatex() {
-            return katex.renderToString(this.node.attrs.katex.toString(), {
+            const purifiedKatex = mixinConvertToTiptap.methods.convertKatex(this.node.attrs.katex.toString())
+            return katex.renderToString(purifiedKatex, {
                 throwOnError: false,
                 safe: true,
                 trust: true
