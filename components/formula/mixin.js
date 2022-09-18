@@ -131,6 +131,12 @@ const MixinComponentFormula = {
                 }
             }
         },
+        getKatexWithNoCorruptedSigns(string) {
+            let finalString = string
+            finalString = finalString.replaceAll('&lt;', '<')
+            finalString = finalString.replaceAll('&gt;', '>')
+            return finalString
+        },
         toggleEdit () {
             this.editMode = !this.editMode
             const katexString = katex.renderToString(this.katex.toString(), {
@@ -227,6 +233,7 @@ const MixinComponentFormula = {
             mf.setOptions(mathliveOptions);
 
             mf.value = this.katex
+            mf.value = this.getKatexWithNoCorruptedSigns(mf.value)
             // formula is a string, the default value as sth to click on to load MathLive
             if (mf.value === 'formula') {
                 // mathfield should have a preset value to be able to get clicked on, so we give it a space
