@@ -819,6 +819,10 @@ const EXTRA_KEYBOARD_LAYER = {
                 },
                 {
                     class: 'keycap tex',
+                    insert: '\\mathop {#0}\\limits^\\\square'
+                },
+                {
+                    class: 'keycap tex',
                     insert: '\\lgroup'
                 },
                 {

@@ -35,7 +35,7 @@ export const katexShortkeys = [
     {
         class: 'math',
         shortKey: 'ctrl+[KeyR]',
-        insert: '\\sqrt[]{2}'
+        insert: '\\sqrt[]'
     },
     {
         class: 'math',
@@ -111,6 +111,11 @@ export const katexShortkeys = [
         class: 'math',
         shortKey: 'ctrl+alt+[KeyP]',
         insert: '\\div'
+    },
+    {
+        class: 'math',
+        shortKey: '[Quote]',
+        insert: '\\prime'
     },
     {
         class: 'persian',

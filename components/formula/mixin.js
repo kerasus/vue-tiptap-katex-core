@@ -2,7 +2,7 @@ import katex from 'katex'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard'
 import {katexShortkeys} from './KatexShortkeys'
 import { MathfieldElement } from 'mathlive'
-
+import mixinConvertToTiptap from '../../mixins/convertToTiptap'
 
 const MixinComponentFormula = {
     props: {
@@ -27,6 +27,7 @@ const MixinComponentFormula = {
             editMode: false,
             questMarkdownText: '# Math Rulez! \n  $x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
             katex: '$x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
+            // katex: '$x$',
             icons: {},
             mf: null
         }
@@ -45,6 +46,10 @@ const MixinComponentFormula = {
                 // katex: this.latexData
                 katex: newValue
             })
+            // formula is a string, the default value as sth to click on to load MathLive
+            if (newValue === 'formula') {
+                return
+            }
             this.katex = newValue
         },
     },
@@ -57,7 +62,8 @@ const MixinComponentFormula = {
             return options
         },
         computedKatex() {
-            return katex.renderToString(this.node.attrs.katex.toString(), {
+            const purifiedKatex = mixinConvertToTiptap.methods.convertKatex(this.node.attrs.katex.toString())
+            return katex.renderToString(purifiedKatex, {
                 throwOnError: false,
                 safe: true,
                 trust: true
@@ -221,6 +227,12 @@ const MixinComponentFormula = {
             mf.setOptions(mathliveOptions);
 
             mf.value = this.katex
+            // formula is a string, the default value as sth to click on to load MathLive
+            if (mf.value === 'formula') {
+                // mathfield should have a preset value to be able to get clicked on, so we give it a space
+                mf.value = '$\\enspace$'
+            }
+            console.log('mf.value', mf.value)
             this.mf = mf
 
             this.$refs.mathfield.appendChild(mf)

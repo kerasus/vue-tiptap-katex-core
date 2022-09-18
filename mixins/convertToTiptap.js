@@ -16,7 +16,7 @@ const mixinConvertToTiptap = {
             string = string.replaceAll(' $', '$')
             string = string.replaceAll('$ ', '$')
 
-            let regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])/gms;
+            let regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
             string = string.replace(regex, (match) => {
                 let finalMatch
                 if (match.includes('$$')) {
@@ -29,6 +29,10 @@ const mixinConvertToTiptap = {
                 finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>').replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
+
+            string = string.replaceAll('&lt;', '<')
+            string = string.replaceAll('&gt;', '>')
+
             return string
         },
         convertImage(string) {
