@@ -77,7 +77,6 @@ const MixinComponentFormula = {
         this.overrideKeyboardEvent()
     },
     mounted () {
-        console.log('computedKatex', this.computedKatex)
         if (this.node.attrs.editMode) {
             setTimeout(() => {
                 this.mf.executeCommand('toggleVirtualKeyboard')
