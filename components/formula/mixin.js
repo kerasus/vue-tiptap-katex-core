@@ -63,7 +63,7 @@ const MixinComponentFormula = {
             return options
         },
         computedKatex() {
-            const purifiedKatex = mixinConvertToTiptap.methods.convertKatex(this.node.attrs.katex.toString())
+            const purifiedKatex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
             return katex.renderToString(purifiedKatex, {
                 throwOnError: false,
                 safe: true,

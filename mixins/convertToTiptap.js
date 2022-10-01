@@ -31,13 +31,11 @@ const mixinConvertToTiptap = {
                 //     finalMatch = finalMatch.replaceAll('\\[', '').replaceAll('\\]', '')
                 // }
                 //currently just testing
-                finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>').replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
+                finalMatch = finalMatch.replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
+                finalMatch = finalMatch.replaceAll('&amp;', '&')
+                finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>')
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
-
-            string = string.replaceAll('&lt;', '<')
-            string = string.replaceAll('&gt;', '>')
-            string = string.replaceAll('&amp;', '&')
 
             return string
         },
@@ -66,6 +64,13 @@ const mixinConvertToTiptap = {
             })
             return wrapper.innerHTML
         },
+        replaceKatexSigns(string) {
+            return string.replaceAll('&amp;', '&')
+                .replaceAll(/&lt;/g, '<')
+                .replaceAll(/&gt;/g, '>')
+                .replaceAll('&amp;', '&')
+                .replaceAll('&nbsp;', ' ')
+        }
     }
 }
 
