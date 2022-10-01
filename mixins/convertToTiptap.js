@@ -26,12 +26,18 @@ const mixinConvertToTiptap = {
                 } else {
                     finalMatch = match.slice(2, -2)
                 }
+                //currently just testing
+                // if (match.includes('\\[') && match.includes('\\]')){
+                //     finalMatch = finalMatch.replaceAll('\\[', '').replaceAll('\\]', '')
+                // }
+                //currently just testing
                 finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>').replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
 
             string = string.replaceAll('&lt;', '<')
             string = string.replaceAll('&gt;', '>')
+            string = string.replaceAll('&amp;', '&')
 
             return string
         },

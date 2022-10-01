@@ -183,7 +183,14 @@ const MixinComponentFormula = {
             this.editor.chain().focus().run()
         },
         getMathliveValue (mf) {
-            return mf.getValue().replaceAll('\\mleft', '\\left').replaceAll('\\mright', '\\right')
+            mf.getValue()
+                .replaceAll('\\mleft', '\\left')
+                .replaceAll('\\mright', '\\right')
+                .replaceAll('&amp;', '&')
+                .replaceAll(/&lt;/g, '<')
+                .replaceAll(/&gt;/g, '>')
+                .replaceAll('&amp;', '&')
+                .replaceAll('&nbsp;', ' ')
         },
         loadMathLive() {
             let mathliveOptions = {
