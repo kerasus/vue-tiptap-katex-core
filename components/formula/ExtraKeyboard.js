@@ -831,6 +831,14 @@ const EXTRA_KEYBOARD_LAYER = {
                 },
                 {
                     class: 'keycap tex',
+                    insert: '\\bigcup_{i=1}^{n}F_{i}'
+                },
+                {
+                    class: 'keycap tex',
+                    insert: '\\bigcap_{i=1}^{n}F_{i}'
+                },
+                {
+                    class: 'keycap tex',
                     insert: '\\%'
                 },
                 {class: 'separator w5'},
