@@ -29,7 +29,8 @@ const MixinComponentFormula = {
             katex: '$x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
             // katex: '$x$',
             icons: {},
-            mf: null
+            mf: null,
+            isFormulaBroken: false
         }
     },
     watch: {
@@ -62,7 +63,7 @@ const MixinComponentFormula = {
             return options
         },
         computedKatex() {
-            const purifiedKatex = mixinConvertToTiptap.methods.convertKatex(this.node.attrs.katex.toString())
+            const purifiedKatex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
             return katex.renderToString(purifiedKatex, {
                 throwOnError: false,
                 safe: true,
@@ -131,8 +132,8 @@ const MixinComponentFormula = {
                 }
             }
         },
-        toggleEdit () {
-            this.editMode = !this.editMode
+        getKatexErrors() {
+            let hasError = false
             const katexString = katex.renderToString(this.katex.toString(), {
                 throwOnError: false,
                 safe: true,
@@ -140,43 +141,56 @@ const MixinComponentFormula = {
             })
             let el = document.createElement('div')
             el.innerHTML = katexString
-            let hasError = false
             el.querySelectorAll('.katex-error').forEach(error => { //configable error hangdling ToDo
                 console.log(error.attributes['title'])
                 hasError = true
                 if (error.attributes['title'].nodeValue.includes('KaTeX parse error: Invalid delimiter \'?\' after \'\\right\'')) {
-                    this.$notify({
-                        group: 'error',
-                        title: 'مشکلی رخ داده است',
-                        text: 'پرانتز یا آکولاد و یا ... بسته نشده است',
-                        type: 'error',
-                        duration: 10000
-                    })
+                    // this.$notify({
+                    //     group: 'error',
+                    //     title: 'مشکلی رخ داده است',
+                    //     text: 'پرانتز یا آکولاد و یا ... بسته نشده است',
+                    //     type: 'error',
+                    //     duration: 10000
+                    // })
                 } else if (error.attributes['title'].nodeValue.includes('KaTeX parse error: Can\'t use function \'$\' in math mode')) {
-                    this.$notify({
-                        group: 'error',
-                        title: 'مشکلی رخ داده است',
-                        text: 'فرمول رو با علامت $ درون این باکس نمیتوانید پیست کنید',
-                        type: 'error',
-                        duration: 10000
-                    })
+                    // this.$notify({
+                    //     group: 'error',
+                    //     title: 'مشکلی رخ داده است',
+                    //     text: 'فرمول رو با علامت $ درون این باکس نمیتوانید پیست کنید',
+                    //     type: 'error',
+                    //     duration: 10000
+                    // })
                 } else {
-                    this.$notify({
-                        group: 'error',
-                        title: 'مشکلی رخ داده است',
-                        text: error.attributes['title'].nodeValue,
-                        type: 'error',
-                        duration: 10000
-                    })
+                    // this.$notify({
+                    //     group: 'error',
+                    //     title: 'مشکلی رخ داده است',
+                    //     text: error.attributes['title'].nodeValue,
+                    //     type: 'error',
+                    //     duration: 10000
+                    // })
                 }
             })
-            if (hasError) {
+            return hasError
+        },
+        doesKatexHaveErrors() {
+            return this.getKatexErrors()
+        },
+        toggleEdit () {
+            this.editMode = !this.editMode
+            if (this.doesKatexHaveErrors()) {
                 this.editMode = true
             }
             this.editor.chain().focus().run()
         },
         getMathliveValue (mf) {
-            return mf.getValue().replaceAll('\\mleft', '\\left').replaceAll('\\mright', '\\right')
+            mf.getValue()
+                .replaceAll('\\mleft', '\\left')
+                .replaceAll('\\mright', '\\right')
+                .replaceAll('&amp;', '&')
+                .replaceAll(/&lt;/g, '<')
+                .replaceAll(/&gt;/g, '>')
+                .replaceAll('&amp;', '&')
+                .replaceAll('&nbsp;', ' ')
         },
         loadMathLive() {
             let mathliveOptions = {
@@ -225,7 +239,9 @@ const MixinComponentFormula = {
                     },
                 });
             mf.setOptions(mathliveOptions);
-
+            if (this.doesKatexHaveErrors()) {
+                this.isFormulaBroken = true
+            }
             mf.value = this.katex
             // formula is a string, the default value as sth to click on to load MathLive
             if (mf.value === 'formula') {
