@@ -1,7 +1,7 @@
 import katex from 'katex'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard'
 import {katexShortkeys} from './KatexShortkeys'
-import { MathfieldElement } from 'mathlive'
+import {MathfieldElement} from 'mathlive'
 import mixinConvertToTiptap from '../../mixins/convertToTiptap'
 
 const MixinComponentFormula = {
@@ -182,8 +182,14 @@ const MixinComponentFormula = {
             }
             this.editor.chain().focus().run()
         },
+        fixFormula() {
+            this.removeMistakenBrackets()
+        },
+        removeMistakenBrackets () {
+
+        },
         getMathliveValue (mf) {
-            mf.getValue()
+            return mf.getValue()
                 .replaceAll('\\mleft', '\\left')
                 .replaceAll('\\mright', '\\right')
                 .replaceAll('&amp;', '&')
