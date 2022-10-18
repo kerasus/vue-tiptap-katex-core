@@ -8,6 +8,7 @@ const mixinConvertToTiptap = {
             }
             string = string.replaceAll('¬', '&#8202;')
             string = string.replaceAll('­', '&#8202;')
+            string = string.replaceAll('', ' ')
             string = this.convertKatex(string)
             // string = this.convertImage(string)
             return string
