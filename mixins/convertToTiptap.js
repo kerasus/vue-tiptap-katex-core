@@ -1,3 +1,5 @@
+import katex from 'katex'
+
 const mixinConvertToTiptap = {
     methods: {
         convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
@@ -70,6 +72,26 @@ const mixinConvertToTiptap = {
                 .replaceAll(/&gt;/g, '>')
                 .replaceAll('&amp;', '&')
                 .replaceAll('&nbsp;', ' ')
+        },
+        getConvertedHtmlToKatex (input) {
+            let string = input
+            string = this.convertToTiptap(string)
+            const regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms
+            string = string.replace(regex, (match) => {
+                let finalMatch
+                if (match.includes('$$')) {
+                    finalMatch = match.slice(2, -2)
+                } else if (match.includes('$')) {
+                    finalMatch = match.slice(1, -1)
+                } else {
+                    finalMatch = match.slice(2, -2)
+                }
+                return katex.renderToString(finalMatch, {
+                    throwOnError: false,
+                    strict: 'warn'
+                })
+            })
+            return string
         }
     }
 }
