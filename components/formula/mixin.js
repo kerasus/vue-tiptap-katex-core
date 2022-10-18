@@ -254,7 +254,6 @@ const MixinComponentFormula = {
                 // mathfield should have a preset value to be able to get clicked on, so we give it a space
                 mf.value = '$\\enspace$'
             }
-            console.log('mf.value', mf.value)
             this.mf = mf
 
             this.$refs.mathfield.appendChild(mf)

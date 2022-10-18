@@ -119,6 +119,27 @@ const EXTRA_KEYBOARD_LAYER = {
             [
                 {
                     class: 'keycap tex',
+                    insert: '\\nsubseteq',
+
+                },
+                {
+                    class: 'keycap tex',
+                    insert: '\\subseteq',
+
+                },
+                {
+                    class: 'keycap tex',
+                    insert: '\\subset',
+
+                },
+                {
+                    class: 'keycap tex',
+                    insert: '\\not\\subset',
+                }
+            ],
+            [
+                {
+                    class: 'keycap tex',
                     insert: '\\Bbb{Q}',
 
                 },
