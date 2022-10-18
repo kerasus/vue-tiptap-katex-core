@@ -74,7 +74,7 @@ const mixinConvertToTiptap = {
                 .replaceAll('&amp;', '&')
                 .replaceAll('&nbsp;', ' ')
         },
-        getConvertedHtmlToKatex (input) {
+        renderKatexToHTML (input) {
             let string = input
             string = this.convertToTiptap(string)
             const regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms
