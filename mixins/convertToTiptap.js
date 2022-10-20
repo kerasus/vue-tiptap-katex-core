@@ -19,7 +19,7 @@ const mixinConvertToTiptap = {
             string = string.replaceAll(' $', '$')
             string = string.replaceAll('$ ', '$')
 
-            let regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
+            let regex = this.getRegexPatternForFormula()
             string = string.replace(regex, (match) => {
                 let finalMatch
                 if (match.includes('$$')) {
@@ -67,6 +67,9 @@ const mixinConvertToTiptap = {
             })
             return wrapper.innerHTML
         },
+        getRegexPatternForFormula() {
+            return /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
+        },
         replaceKatexSigns(string) {
             return string.replaceAll('&amp;', '&')
                 .replaceAll(/&lt;/g, '<')
@@ -74,23 +77,22 @@ const mixinConvertToTiptap = {
                 .replaceAll('&amp;', '&')
                 .replaceAll('&nbsp;', ' ')
         },
-        renderKatexToHTML (input) {
+        renderKatexToHTML (input, katexConfig = {
+            throwOnError: false,
+            strict: 'warn'
+        }) {
             let string = input
             string = this.convertToTiptap(string)
-            const regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms
+            let regex = this.getRegexPatternForFormula()
             string = string.replace(regex, (match) => {
                 let finalMatch
-                if (match.includes('$$')) {
-                    finalMatch = match.slice(2, -2)
-                } else if (match.includes('$')) {
+                if (match.includes('$')) {
                     finalMatch = match.slice(1, -1)
                 } else {
                     finalMatch = match.slice(2, -2)
+                    finalMatch = this.replaceKatexSigns(finalMatch)
                 }
-                return katex.renderToString(finalMatch, {
-                    throwOnError: false,
-                    strict: 'warn'
-                })
+                return katex.renderToString(finalMatch, katexConfig)
             })
             return string
         }
