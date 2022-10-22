@@ -23,7 +23,7 @@ const MixinComponentFormula = {
         return {
             editModal: false,
             latexData: null,
-            formula: '',
+            formulaEditPanel: '',
             editMode: false,
             questMarkdownText: '# Math Rulez! \n  $x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
             katex: '$x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
@@ -47,8 +47,8 @@ const MixinComponentFormula = {
                 // katex: this.latexData
                 katex: newValue
             })
-            // formula is a string, the default value as sth to click on to load MathLive
-            if (newValue === 'formula') {
+            // formulaEditPanel is a string, the default value as sth to click on to load MathLive
+            if (newValue === 'formulaEditPanel') {
                 return
             }
             this.katex = newValue
@@ -64,6 +64,7 @@ const MixinComponentFormula = {
         },
         computedKatex() {
             const purifiedKatex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
+            this.checkMathLivePanelVisibility(purifiedKatex)
             return katex.renderToString(purifiedKatex, {
                 throwOnError: false,
                 safe: true,
@@ -96,7 +97,12 @@ const MixinComponentFormula = {
         //     item.setAttribute('dir', 'auto')
         //   })
         //   return input
-        // },
+        // },]
+        checkMathLivePanelVisibility (input) {
+            if (input === 'formulaEditPanel') {
+                this.editMode = true
+            }
+        },
         overrideKeyboardEvent () {
             window.document.onkeydown = overrideKeyboardEvent;
             window.document.onkeyup = overrideKeyboardEvent;
@@ -249,8 +255,8 @@ const MixinComponentFormula = {
                 this.isFormulaBroken = true
             }
             mf.value = this.katex
-            // formula is a string, the default value as sth to click on to load MathLive
-            if (mf.value === 'formula') {
+            // formulaEditPanel is a string, the default value as sth to click on to load MathLive
+            if (mf.value === 'formulaEditPanel') {
                 // mathfield should have a preset value to be able to get clicked on, so we give it a space
                 mf.value = '$\\enspace$'
             }
