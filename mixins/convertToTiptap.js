@@ -1,3 +1,5 @@
+import katex from 'katex'
+
 const mixinConvertToTiptap = {
     methods: {
         convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
@@ -6,6 +8,7 @@ const mixinConvertToTiptap = {
             }
             string = string.replaceAll('¬', '&#8202;')
             string = string.replaceAll('­', '&#8202;')
+            string = string.replaceAll('', ' ')
             string = this.convertKatex(string)
             // string = this.convertImage(string)
             return string
@@ -16,7 +19,7 @@ const mixinConvertToTiptap = {
             string = string.replaceAll(' $', '$')
             string = string.replaceAll('$ ', '$')
 
-            let regex = /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
+            let regex = this.getRegexPatternForFormula()
             string = string.replace(regex, (match) => {
                 let finalMatch
                 if (match.includes('$$')) {
@@ -64,12 +67,34 @@ const mixinConvertToTiptap = {
             })
             return wrapper.innerHTML
         },
+        getRegexPatternForFormula() {
+            return /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
+        },
         replaceKatexSigns(string) {
             return string.replaceAll('&amp;', '&')
                 .replaceAll(/&lt;/g, '<')
                 .replaceAll(/&gt;/g, '>')
                 .replaceAll('&amp;', '&')
                 .replaceAll('&nbsp;', ' ')
+        },
+        renderKatexToHTML (input, katexConfig = {
+            throwOnError: false,
+            strict: 'warn'
+        }) {
+            let string = input
+            string = this.convertToTiptap(string)
+            let regex = this.getRegexPatternForFormula()
+            string = string.replace(regex, (match) => {
+                let finalMatch
+                if (match.includes('$')) {
+                    finalMatch = match.slice(1, -1)
+                } else {
+                    finalMatch = match.slice(2, -2)
+                    finalMatch = this.replaceKatexSigns(finalMatch)
+                }
+                return katex.renderToString(finalMatch, katexConfig)
+            })
+            return string
         }
     }
 }

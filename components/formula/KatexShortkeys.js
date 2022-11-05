@@ -13,6 +13,12 @@ export const katexShortkeys = [
         insert: '\\enspace'
     },
     {
+        // half-space
+        class: 'math',
+        shortKey: 'ctrl+shift+[Space]',
+        insert: '\\,'
+    },
+    {
         class: 'math',
         shortKey: 'ctrl+shift+[KeyF]',
         insert: '\\times'
