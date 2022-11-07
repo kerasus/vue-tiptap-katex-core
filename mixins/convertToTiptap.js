@@ -37,6 +37,7 @@ const mixinConvertToTiptap = {
                 finalMatch = finalMatch.replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 finalMatch = finalMatch.replaceAll('&amp;', '&')
                 finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>')
+                finalMatch = finalMatch.replaceAll('~', 'sim ')
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
 
