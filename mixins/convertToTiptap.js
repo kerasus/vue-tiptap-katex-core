@@ -29,11 +29,12 @@ const mixinConvertToTiptap = {
                 } else {
                     finalMatch = match.slice(2, -2)
                 }
-                //currently just testing
-                // if (match.includes('\\[') && match.includes('\\]')){
-                //     finalMatch = finalMatch.replaceAll('\\[', '').replaceAll('\\]', '')
-                // }
-                //currently just testing
+                finalMatch = finalMatch.replace(/\\\[.*\\]/gms, (bracketMatch) => {
+                    if (finalMatch.indexOf('\\[') === 0 && finalMatch.indexOf('\\]') === finalMatch.length-2){
+                        return bracketMatch.replace('\\[', '').replace('\\]', '')
+                    }
+                    return bracketMatch
+                })
                 finalMatch = finalMatch.replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 finalMatch = finalMatch.replaceAll('&amp;', '&')
                 finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>')
