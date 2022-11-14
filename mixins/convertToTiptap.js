@@ -37,7 +37,6 @@ const mixinConvertToTiptap = {
                 })
                 finalMatch = finalMatch.replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 finalMatch = finalMatch.replaceAll('&amp;', '&')
-                finalMatch = finalMatch.replaceAll(/&lt;/g, '<').replaceAll(/&gt;/g, '>')
                 finalMatch = finalMatch.replaceAll('~', 'sim ')
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
@@ -73,11 +72,14 @@ const mixinConvertToTiptap = {
             return /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
         },
         replaceKatexSigns(string) {
-            return string.replaceAll('&amp;', '&')
+            return string
+                .replaceAll('&amp;', '&')
                 .replaceAll(/&lt;/g, '<')
                 .replaceAll(/&gt;/g, '>')
                 .replaceAll('&amp;', '&')
                 .replaceAll('&nbsp;', ' ')
+                .replaceAll('\\mleft', '\\left')
+                .replaceAll('\\mright', '\\right')
         },
         renderKatexToHTML (input, katexConfig = {
             throwOnError: false,
@@ -92,6 +94,8 @@ const mixinConvertToTiptap = {
                     finalMatch = match.slice(1, -1)
                 } else {
                     finalMatch = match.slice(2, -2)
+                }
+                if (finalMatch){
                     finalMatch = this.replaceKatexSigns(finalMatch)
                 }
                 return katex.renderToString(finalMatch, katexConfig)
