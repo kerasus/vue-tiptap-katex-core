@@ -73,7 +73,7 @@ const MixinComponentFormula = {
         }
     },
     created() {
-        this.katex = this.node.attrs.katex.toString()
+        this.katex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
         this.editMode = this.node.attrs.editMode
         this.overrideKeyboardEvent()
     },
@@ -194,13 +194,13 @@ const MixinComponentFormula = {
         removeMistakenBrackets () {
 
         },
-        getMathliveValue (mf) {
-            return mf.getValue()
+        getMathliveModifiedValue (value) {
+            return value
                 .replaceAll('\\mleft', '\\left')
                 .replaceAll('\\mright', '\\right')
                 .replaceAll('&amp;', '&')
-                .replaceAll(/&lt;/g, '<')
-                .replaceAll(/&gt;/g, '>')
+                .replaceAll('&lt;', '<')
+                .replaceAll('&gt;', '>')
                 .replaceAll('&amp;', '&')
                 .replaceAll('&nbsp;', ' ')
         },
@@ -247,14 +247,14 @@ const MixinComponentFormula = {
                 {
                     virtualKeyboardMode: 'manual',
                     onContentDidChange: (mf) => {
-                        that.latexData = that.getMathliveValue(mf)
+                        that.latexData = that.getMathliveModifiedValue(mf.getValue())
                     },
                 });
             mf.setOptions(mathliveOptions);
             if (this.doesKatexHaveErrors()) {
                 this.isFormulaBroken = true
             }
-            mf.value = this.katex
+            mf.value = that.getMathliveModifiedValue(this.katex)
             // formulaEditPanel is a string, the default value as sth to click on to load MathLive
             if (mf.value === 'formulaEditPanel') {
                 // mathfield should have a preset value to be able to get clicked on, so we give it a space
@@ -277,7 +277,7 @@ const MixinComponentFormula = {
             // mf.$setConfig(
             //     //{ macros: { ...mf.getConfig('macros'), smallfrac: '{}^{#1}\\!\\!/\\!{}_{#2}', }, }
             // );
-            that.latexData = that.getMathliveValue(mf)
+            that.latexData = that.getMathliveModifiedValue(mf.getValue())
         }
     }
 }
