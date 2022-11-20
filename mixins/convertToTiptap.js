@@ -37,7 +37,10 @@ const mixinConvertToTiptap = {
                 })
                 finalMatch = finalMatch.replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ')
                 finalMatch = finalMatch.replaceAll('&amp;', '&')
-                finalMatch = finalMatch.replaceAll('~', 'sim ')
+                if (finalMatch.includes('\\~')) {
+                    finalMatch = finalMatch.replaceAll('~', 'sim ')
+                }
+                finalMatch = this.correctParenthesis(finalMatch)
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
 
@@ -67,6 +70,20 @@ const mixinConvertToTiptap = {
                 }
             })
             return wrapper.innerHTML
+        },
+        correctParenthesis (input) {
+            const regex = /(\\left\()(.*?)(\\right)./gms
+            return input.replaceAll(regex, (result) => {
+                const lastCharOfResult = result.substring(result.length-1)
+                let finalResult = result
+                if (lastCharOfResult === '?'){
+                    finalResult = result.substring(0,result.length-1) + ')'
+                }
+                else if (lastCharOfResult !== ')') {
+                    finalResult = result.substring(0,result.length-1) + ')' + lastCharOfResult
+                }
+                return finalResult
+            })
         },
         getRegexPatternForFormula() {
             return /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
