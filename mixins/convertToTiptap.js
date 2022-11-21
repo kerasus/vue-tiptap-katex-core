@@ -100,7 +100,9 @@ const mixinConvertToTiptap = {
         },
         renderKatexToHTML (input, katexConfig = {
             throwOnError: false,
-            strict: 'warn'
+            strict: 'warn',
+            safe: true,
+            trust: true
         }) {
             let string = input
             string = this.convertToTiptap(string)
