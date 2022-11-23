@@ -41,6 +41,7 @@ const mixinConvertToTiptap = {
                     finalMatch = finalMatch.replaceAll('~', 'sim ')
                 }
                 finalMatch = this.correctParenthesis(finalMatch)
+                finalMatch = this.correctCurlyBrackets(finalMatch)
                 return '<span data-katex="true">$' + finalMatch + '$</span>'
             })
 
@@ -85,8 +86,22 @@ const mixinConvertToTiptap = {
                 return finalResult
             })
         },
+        correctCurlyBrackets (input) {
+            const regex = /(\\begin{array})(.*?)(\\end{array)./gms
+            return input.replaceAll(regex, (result) => {
+                const lastCharOfResult = result.substring(result.length-1)
+                let finalResult = result
+                // if (lastCharOfResult === '?'){
+                //     finalResult = result.substring(0,result.length-1) + ')'
+                // }
+                if (lastCharOfResult !== '}') {
+                    finalResult = result.substring(0,result.length-1) + '}' + lastCharOfResult
+                }
+                return finalResult
+            })
+        },
         getRegexPatternForFormula() {
-            return /(\${1}((?!\$).)+?\${1})|(\${2}((?!\$).)+?\${2})|(\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\[\\((?! ).){1}((?!\$).)*?((?! ).){1}\]\\)/gms;
+            return /(\${2}((?!\$\$).)+?\${2})|(\${1}((?!\$).)+?\${1})|(\\\[.+?\\\])|(\[\\.+?\]\\)/gms;
         },
         replaceKatexSigns(string) {
             return string
