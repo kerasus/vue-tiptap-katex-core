@@ -9,6 +9,7 @@ const mixinConvertToTiptap = {
             string = string.replaceAll('¬', '&#8202;')
             string = string.replaceAll('­', '&#8202;')
             string = string.replaceAll('', ' ')
+            string = this.removeEmptyFormulaElements(string)
             string = this.convertKatex(string)
             // string = this.convertImage(string)
             return string
@@ -65,6 +66,17 @@ const mixinConvertToTiptap = {
                 }
             })
             return wrapper.innerHTML
+        },
+        removeEmptyFormulaElements (htmlElement) {
+            let parser = new DOMParser()
+            let document = parser.parseFromString(htmlElement, 'text/html')
+            document.querySelectorAll('span[data-katex]').forEach(spanEl => {
+                if (spanEl.innerHTML === '$$' || spanEl.innerHTML === ''){
+                    spanEl.remove()
+                }
+            })
+            const finalHtml = document.querySelector('body').innerHTML
+            return finalHtml
         },
         correctParenthesis (input) {
             const regex = /(\\left\()(.*?)(\\right)./gms
