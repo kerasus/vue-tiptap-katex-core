@@ -840,7 +840,7 @@ const EXTRA_KEYBOARD_LAYER = {
                 },
                 {
                     class: 'keycap tex',
-                    insert: '\\mathop {#0}\\limits^\\\square'
+                    insert: '\\mathop {#0}\\limits^\\square'
                 },
                 {
                     class: 'keycap tex',
@@ -938,15 +938,22 @@ const EXTRA_KEYBOARD_LAYER = {
 
                 {
                     class: 'keycap tex small w30',
-                    insert: 'y=\\begin{cases}y=x^2 & x>0 \\\\ y=x^3 & x<0\\end{cases}',
+                    insert: 'y=\\begin{cases}x^2 & x>0 \\\\ x^3 & x<0\\end{cases}',
                 },
                 {
                     class: 'keycap tex small w30 h80',
-                    insert: 'y=\\begin{cases}y=x^2 & x>0 \\\\ y=x & x=0 \\\\ y=x^3 & x<0\\end{cases}',
+                    insert: 'y=\\begin{cases}x^2 & x>0 \\\\ x & x=0 \\\\ x^3 & x<0\\end{cases}',
                 },
                 {
                     class: 'keycap tex small w30 h100',
-                    insert: 'y=\\begin{cases}y=x^2 & x>1 \\\\ y=x+2 & x=1 \\\\ y=x & x>0 \\\\ y=x^3 & x<0\\end{cases}',
+                    insert: 'y=\\begin{cases}x^2 & x>1 \\\\ x+2 & x=1 \\\\ x & x>0 \\\\ x^3 & x<0\\end{cases}',
+                    styles: {
+                        height: '100px'
+                    }
+                },
+                {
+                    class: 'keycap tex small w30 h120',
+                    insert: 'y=\\begin{cases}x^2 & x>1 \\\\ x+2 & x=1 \\\\ x & 1>x>0 \\\\ x^3 & x=0 \\\\ x^2 & x<0\\end{cases}',
                     styles: {
                         height: '100px'
                     }
