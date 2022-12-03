@@ -9,6 +9,8 @@ const mixinConvertToTiptap = {
             string = string.replaceAll('¬', '&#8202;')
             string = string.replaceAll('­', '&#8202;')
             string = string.replaceAll('', ' ')
+            string = this.removeEmptyFormulaElements(string)
+            // string = this.modifySpecialElements(string)
             string = this.convertKatex(string)
             // string = this.convertImage(string)
             return string
@@ -66,6 +68,18 @@ const mixinConvertToTiptap = {
             })
             return wrapper.innerHTML
         },
+        // todo: refactor: modify method name
+        removeEmptyFormulaElements (htmlElement) {
+            let parser = new DOMParser()
+            let document = parser.parseFromString(htmlElement, 'text/html')
+            document.querySelectorAll('span[data-katex]').forEach(spanEl => {
+                if (spanEl.innerHTML === '$$' || spanEl.innerHTML === ''){
+                    spanEl.remove()
+                }
+            })
+            const finalHtml = document.querySelector('body').innerHTML
+            return finalHtml
+        },
         correctParenthesis (input) {
             const regex = /(\\left\()(.*?)(\\right)./gms
             return input.replaceAll(regex, (result) => {
@@ -93,6 +107,13 @@ const mixinConvertToTiptap = {
                 }
                 return finalResult
             })
+        },
+        // todo: modify method : method must find elements outside data-katex
+        modifySpecialElements (input) {
+            if (input.includes('$')){
+                return input.replaceAll('$','&#x24;')
+            }
+            return input
         },
         getRegexPatternForFormula() {
             return /(\${2}((?!\$\$).)+?\${2})|(\${1}((?!\$).)+?\${1})|(\\\[.+?\\\])|(\[\\.+?\]\\)/gms;
