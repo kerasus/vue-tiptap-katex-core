@@ -209,47 +209,16 @@ const MixinComponentFormula = {
                 customVirtualKeyboardLayers: EXTRA_KEYBOARD_LAYER,
                 customVirtualKeyboards: EXTRA_KEYBOARD,
                 virtualKeyboards: this.keyboardList,
-                onKeystroke: (mathfield, keystroke /* , ev */) => {
-                    // console.log('ev', ev)
-                    // console.log('mathfield', mathfield)
-                    if (keystroke === 'ctrl+[Enter]') {
-                        this.mf.executeCommand('toggleVirtualKeyboard')
-                        this.toggleEdit()
-                        this.editor.chain().focus('end').run()
-                        return false
-                    }
-                    for (let i = 0; i < katexShortkeys.length; i++) {
-                        if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'math') {
-                            mf.insert(katexShortkeys[i].insert)
-                            return false
-                        }
-                    }
-                    if (this.editor.editorOptions.persianKeyboard) {
-                        for (let i = 0; i < katexShortkeys.length; i++) {
-                            if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'persian') {
-                                mf.insert(katexShortkeys[i].insert)
-                                return false
-                            }
-                        }
-                    }
-                    // Keystroke not handled, return true for default handling to proceed.
-                    return true;
-                },
+                virtualKeyboardMode: 'manual',
+                keypressSound: 'none',
                 mathModeSpace: '\\:',
                 inlineShortcuts: {
                     'lim': { mode: 'math', value: '\\lim\\limits_{x \\to \\infty}' },
                 },
             }
             Object.assign(mathliveOptions, this.editor.editorOptions.mathliveOptions)
-            // this.katex = this.markdown.render(this.katex)
             let that = this
-            const mf = new MathfieldElement(
-                {
-                    virtualKeyboardMode: 'manual',
-                    onContentDidChange: (mf) => {
-                        that.latexData = that.getMathliveModifiedValue(mf.getValue())
-                    },
-                });
+            const mf = new MathfieldElement()
             mf.setOptions(mathliveOptions);
             if (this.doesKatexHaveErrors()) {
                 this.isFormulaBroken = true
@@ -260,24 +229,62 @@ const MixinComponentFormula = {
                 // mathfield should have a preset value to be able to get clicked on, so we give it a space
                 mf.value = '$\\enspace$'
             }
+
             this.mf = mf
+
+            mf.addEventListener('keydown', (ev) => {
+                this.setKatexShortkeys(ev, mf)
+                that.latexData = that.getMathliveModifiedValue(mf.getValue())
+            })
+            mf.addEventListener('input', (ev) => {
+                that.latexData = that.getMathliveModifiedValue(mf.getValue())
+            })
+
+            // selection-change : listens to every change such as pointer change
+            // mf.addEventListener('selection-change', (ev) => {
+            //     console.log('selection-change ev', this.mf.getValue())
+            // })
 
             this.$refs.mathfield.appendChild(mf)
 
-            // MathLive > 0.60
-            // this.$refs.mathfield.setOptions({
-            //   virtualKeyboardMode: 'manual',
-            //   'customVirtualKeyboardLayers': EXTRA_KEYBOARD_LAYER,
-            //   'customVirtualKeyboards': EXTRA_KEYBOARD,
-            //   'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard others-keyboard extra-keyboard',
-            //   mathModeSpace: '\\:'
-            // });
-
-            // console.log(mf.getOption())
-            // mf.$setConfig(
-            //     //{ macros: { ...mf.getConfig('macros'), smallfrac: '{}^{#1}\\!\\!/\\!{}_{#2}', }, }
-            // );
             that.latexData = that.getMathliveModifiedValue(mf.getValue())
+        },
+        setKatexShortkeys (ev, mf) {
+            const keyCode = ev.code
+            let keystroke = ''
+            if (ev.ctrlKey) {
+                keystroke += 'ctrl+'
+            }
+            if (ev.altKey) {
+                keystroke += 'alt+'
+            }
+            if (ev.shiftKey) {
+                keystroke += 'shift+'
+            }
+            if (keyCode) {
+                keystroke += '['+ keyCode +']'
+            }
+            if (keystroke === 'ctrl+[Enter]') {
+                this.mf.executeCommand('toggleVirtualKeyboard')
+                this.toggleEdit()
+                this.editor.chain().focus('end').run()
+            }
+            for (let i = 0; i < katexShortkeys.length; i++) {
+                if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'math') {
+                    mf.insert(katexShortkeys[i].insert)
+                }
+            }
+            if (this.editor.editorOptions.persianKeyboard) {
+                for (let i = 0; i < katexShortkeys.length; i++) {
+                    if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'persian') {
+                        mf.insert(katexShortkeys[i].insert)
+                        // in order to remove the 8 from ۸8 :D
+                        setTimeout(()=> {
+                            mf.executeCommand('undo')
+                        }, 100)
+                    }
+                }
+            }
         }
     }
 }
