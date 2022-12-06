@@ -8,7 +8,7 @@ const Shortkeys = Extension.create({
             // Paste Shortkey
             'Mod-Shift-v': () => navigator.clipboard.readText()
                 .then(text => {
-                    let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms
+                    let regex = mixinConvertToTiptap.methods.getRegexPatternForFormula()
                     let counter = 0
                     let formulas = []
                     text = text.replace(regex, match => {
