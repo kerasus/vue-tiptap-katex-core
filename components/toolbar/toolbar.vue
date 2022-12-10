@@ -141,6 +141,15 @@
         </div>
       </li>
       <li>
+        <input
+            class="toolbar-item"
+            id="toolbar-item-set-color"
+            type="color"
+            @input="editor.chain().focus().setColor($event.target.value).run()"
+            :value="getInputValue"
+        >
+      </li>
+      <li>
         <div class="vl" />
       </li>
       <li>
@@ -198,17 +207,6 @@
         >
           <span
               class="mdi mdi-format-textdirection-r-to-l toolbar-item-icon"
-          />
-        </div>
-      </li>
-      <li>
-        <div
-            class="toolbar-item"
-            id="toolbar-item-Text-ltr"
-            @click="editor.chain().focus().setTextDirection('ltr').run()"
-        >
-          <span
-              class="mdi mdi-format-textdirection-l-to-r toolbar-item-icon"
           />
         </div>
       </li>
@@ -476,6 +474,17 @@ export default {
       }
     }
   },
+  computed: {
+    getInputValue () {
+      let rgbColor = this.editor.getAttributes('textStyle').color
+      if (rgbColor && !rgbColor.includes('#')) {
+        rgbColor = rgbColor.replace('rgb(','').replace(')','')
+        rgbColor = rgbColor.split(', ')
+        return this.rgbToHex(rgbColor[0], rgbColor[1], rgbColor[2])
+      }
+      return this.editor.getAttributes('textStyle').color
+    }
+  },
   methods: {
     setAllTooltips(){
       let that = this
@@ -495,6 +504,9 @@ export default {
       tippy('#' + itemId , {
         content: content,
       })
+    },
+    rgbToHex(r, g, b) {
+      return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)
     }
   }
 }
