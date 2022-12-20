@@ -211,6 +211,17 @@
         </div>
       </li>
       <li>
+        <div
+            class="toolbar-item"
+            id="toolbar-item-Text-ltr"
+            @click="editor.chain().focus().setTextDirection('ltr').run()"
+        >
+          <span
+              class="mdi mdi-format-textdirection-l-to-r toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
         <div class="vl" />
       </li>
       <li>
