@@ -493,6 +493,9 @@ export default {
         rgbColor = rgbColor.split(', ')
         return this.rgbToHex(rgbColor[0], rgbColor[1], rgbColor[2])
       }
+      else if (!rgbColor) {
+        return '#000000'
+      }
       return this.editor.getAttributes('textStyle').color
     }
   },

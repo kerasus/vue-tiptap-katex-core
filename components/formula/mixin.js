@@ -265,23 +265,22 @@ const MixinComponentFormula = {
                 keystroke += '['+ keyCode +']'
             }
             if (keystroke === 'ctrl+[Enter]') {
+                ev.preventDefault()
                 this.mf.executeCommand('toggleVirtualKeyboard')
                 this.toggleEdit()
                 this.editor.chain().focus('end').run()
             }
             for (let i = 0; i < katexShortkeys.length; i++) {
                 if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'math') {
+                    ev.preventDefault()
                     mf.insert(katexShortkeys[i].insert)
                 }
             }
             if (this.editor.editorOptions.persianKeyboard) {
                 for (let i = 0; i < katexShortkeys.length; i++) {
                     if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'persian') {
+                        ev.preventDefault()
                         mf.insert(katexShortkeys[i].insert)
-                        // in order to remove the 8 from ۸8 :D
-                        setTimeout(()=> {
-                            mf.executeCommand('undo')
-                        }, 100)
                     }
                 }
             }
