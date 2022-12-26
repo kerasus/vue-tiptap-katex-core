@@ -45,7 +45,8 @@
     "turndown": "^7.1.1",
     "vue-drag-resize": "^1.5.4",
     "vue-notification": "^1.3.20",
-    "vue-upload-component": "^2.8.23"
+    "vue-upload-component": "^2.8.23",
+    "vue": "^2.5.17"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.8",
@@ -62,7 +63,6 @@
     "css-loader": "^6.7.3"
   },
   "peerDependencies": {
-    "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
     "prosemirror-commands": "^1.3.1",
     "prosemirror-dropcursor": "1.5.0",
