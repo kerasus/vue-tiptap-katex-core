@@ -270,6 +270,20 @@ const MixinComponentFormula = {
                 this.toggleEdit()
                 this.editor.chain().focus('end').run()
             }
+            if (ev.key === 'گ') {
+                ev.preventDefault()
+                mf.insert('گ')
+                setTimeout(()=> {
+                    mf.executeCommand('undo')
+                }, 100)
+            }
+            if (ev.key === 'پ' && ev.keyCode === 220) {
+                ev.preventDefault()
+                setTimeout(()=> {
+                    mf.executeCommand('undo')
+                    mf.insert('پ')
+                }, 100)
+            }
             for (let i = 0; i < katexShortkeys.length; i++) {
                 if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'math') {
                     ev.preventDefault()
