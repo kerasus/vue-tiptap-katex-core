@@ -239,15 +239,18 @@ const EXTRA_KEYBOARD_LAYER = {
                 {class: 'separator w5'},
                 {
                     class: 'keycap tex',
-                    insert: '\\cancel{#0}',
+                    label: "<span style='background: linear-gradient(to left top, transparent 47.75%, currentColor 49.5%, currentColor 50.5%, transparent 52.25%);'>a</span>",
+                    insert: '$\\cancel{\\placeholder{}}$',
                 },
                 {
                     class: 'keycap tex',
-                    insert: '\\bcancel{#0}',
+                    label: "<span style='background: linear-gradient(to top right, transparent 47.75%, currentColor 49.5%, currentColor 50.5%, transparent 52.25%);'>a</span>",
+                    insert: '\\bcancel{\\placeholder{}}',
                 },
                 {
                     class: 'keycap tex',
-                    insert: '\\xcancel{#0}',
+                    label: "<span style='font-size: 20px;'>&#9746;</span>",
+                    insert: '\\xcancel{\\placeholder{}}',
                 },
                 {
                     class: 'keycap tex',

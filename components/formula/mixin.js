@@ -265,23 +265,36 @@ const MixinComponentFormula = {
                 keystroke += '['+ keyCode +']'
             }
             if (keystroke === 'ctrl+[Enter]') {
+                ev.preventDefault()
                 this.mf.executeCommand('toggleVirtualKeyboard')
                 this.toggleEdit()
                 this.editor.chain().focus('end').run()
             }
+            if (ev.key === 'گ') {
+                ev.preventDefault()
+                mf.insert('گ')
+                setTimeout(()=> {
+                    mf.executeCommand('undo')
+                }, 100)
+            }
+            if (ev.key === 'پ' && ev.keyCode === 220) {
+                ev.preventDefault()
+                setTimeout(()=> {
+                    mf.executeCommand('undo')
+                    mf.insert('پ')
+                }, 100)
+            }
             for (let i = 0; i < katexShortkeys.length; i++) {
                 if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'math') {
+                    ev.preventDefault()
                     mf.insert(katexShortkeys[i].insert)
                 }
             }
             if (this.editor.editorOptions.persianKeyboard) {
                 for (let i = 0; i < katexShortkeys.length; i++) {
                     if (keystroke === katexShortkeys[i].shortKey && katexShortkeys[i].class === 'persian') {
+                        ev.preventDefault()
                         mf.insert(katexShortkeys[i].insert)
-                        // in order to remove the 8 from ۸8 :D
-                        setTimeout(()=> {
-                            mf.executeCommand('undo')
-                        }, 100)
                     }
                 }
             }

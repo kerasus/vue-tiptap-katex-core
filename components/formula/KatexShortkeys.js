@@ -30,7 +30,7 @@ export const katexShortkeys = [
     },
     {
         class: 'math',
-        shortKey: 'ctrl+alt+[KeyT]]',
+        shortKey: 'ctrl+alt+[KeyT]',
         insert: '{#0}^\\text{text}'
     },
     {
@@ -46,12 +46,14 @@ export const katexShortkeys = [
     {
         class: 'math',
         shortKey: 'ctrl+[KeyH]',
-        insert: '#0^(#?)'
+        insert: '#0^{#?}'
     },
     {
         class: 'math',
         shortKey: 'ctrl+[KeyL]',
-        insert: '#0_(#?)'
+        // insert: '\\placeholder{}_{\\placeholder{}}'
+        // or :
+        insert: '#0_{#?}'
     },
     {
         class: 'math',

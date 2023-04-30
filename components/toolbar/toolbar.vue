@@ -211,6 +211,17 @@
         </div>
       </li>
       <li>
+        <div
+            class="toolbar-item"
+            id="toolbar-item-Text-ltr"
+            @click="editor.chain().focus().setTextDirection('ltr').run()"
+        >
+          <span
+              class="mdi mdi-format-textdirection-l-to-r toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
         <div class="vl" />
       </li>
       <li>
@@ -481,6 +492,9 @@ export default {
         rgbColor = rgbColor.replace('rgb(','').replace(')','')
         rgbColor = rgbColor.split(', ')
         return this.rgbToHex(rgbColor[0], rgbColor[1], rgbColor[2])
+      }
+      else if (!rgbColor) {
+        return '#000000'
       }
       return this.editor.getAttributes('textStyle').color
     }
