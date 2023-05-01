@@ -886,6 +886,10 @@ const EXTRA_KEYBOARD_LAYER = {
                 },
                 {
                     class: 'keycap tex',
+                    insert: '\\backsim'
+                },
+                {
+                    class: 'keycap tex',
                     insert: '\\cong'
                 },
                 {
