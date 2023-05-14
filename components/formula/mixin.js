@@ -1,8 +1,8 @@
 import katex from 'katex'
-import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard'
-import {katexShortkeys} from './KatexShortkeys'
 import {MathfieldElement} from 'mathlive'
-import mixinConvertToTiptap from '../../mixins/convertToTiptap'
+import {katexShortkeys} from './KatexShortkeys.js'
+import mixinConvertToTiptap from '../../mixins/convertToTiptap.js'
+import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard.js'
 
 const MixinComponentFormula = {
     props: {

@@ -62,9 +62,8 @@
 </template>
 
 <script>
-
 import katex from 'katex'
-import {katexShortkeys} from './formula/KatexShortkeys'
+import {katexShortkeys} from './formula/KatexShortkeys.js'
 
 export default {
   name: 'InfoTable',
