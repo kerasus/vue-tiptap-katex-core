@@ -1,6 +1,6 @@
 {
   "name": "vue-tiptap-katex-core",
-  "version": "1.0.55",
+  "version": "2.0.0",
   "description": "core of tiptap editor",
   "main": "index.js",
   "keywords": [
@@ -46,7 +46,7 @@
     "tiptap-extensions": "^1.35.2",
     "tiptap-text-direction-extension": "^1.0.7",
     "turndown": "^7.1.1",
-    "vue": "^2.5.17",
+    "vue": "^3.2.47",
     "vue-drag-resize": "^1.5.4",
     "vue-notification": "^1.3.20",
     "vue-upload-component": "^2.8.23"

@@ -128,8 +128,6 @@ export default {
     this.renderShortKeysImages('ctrl+alt+[KeyT]]')
     // console.log(this.shortKeyImages)
   },
-  mounted() {
-  },
   computed: {
     renderItems() {
       return (string) => {
@@ -268,8 +266,6 @@ export default {
         return shortKeyImages
       }
     }
-
-
   },
   methods: {
     closeDialog() {
