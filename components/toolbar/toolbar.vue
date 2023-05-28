@@ -454,7 +454,7 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import '../../css/toolbar-Item.scss'
 
-import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap.js';
+import mixinConvertToTiptap from '../../mixins/convertToTiptap.mjs';
 
 export default {
   name: 'Toolbar',
