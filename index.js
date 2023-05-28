@@ -19,11 +19,11 @@ import ComponentSlotFloatingMenu from './components/SlotFloatingMenu'
 import ComponentTipTapInteractiveInfoTable from './components/tipTapInteractiveInfoTable'
 
 import ExtensionImageAlign from './extension/ImageAlign/ImageAlign'
-import ExtensionTiptapShortkeys from './extension/Shortkeys/TiptapShortkeys'
-import ExtensionThinSpace from './extension/ThinSpace/ThinSpace'
+import ExtensionTiptapShortkeys from './extension/Shortkeys/TiptapShortkeys.mjs'
+import ExtensionThinSpace from './extension/ThinSpace/ThinSpace.mjs'
 
 import MixinsConvertToHTML from './mixins/convertToHTML'
-import MixinsConvertToTiptap from './mixins/convertToTiptap'
+import MixinsConvertToTiptap from './mixins/convertToTiptap.mjs'
 
 export {
     MixinComponentFormula,

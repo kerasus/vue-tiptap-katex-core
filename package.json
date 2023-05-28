@@ -1,113 +1,115 @@
 {
-  "name": "vue-tiptap-katex-core",
-  "version": "1.0.52",
-  "description": "core of tiptap editor",
-  "main": "index.js",
-  "keywords": [
-    "vue",
-    "tiptap",
-    "katex",
-    "vue-tiptap-katex"
-  ],
-  "contributors": [
-    {
-      "name": "Ali Esmaeeli",
-      "email": "aliesmaeeli20@gmail.com",
-      "url": "https://github.com/kerasus/vue-tiptap-katex-core"
-    },
-    {
-      "name": "Mostafa Kazemi",
-      "email": "neo.kazemi168@gmail.com",
-      "url": "https://github.com/neokazemi/vue-tiptap-katex-core"
-    },
-    {
-      "name": "Yasaman gonehi",
-      "email": "yasaman.gonehi@gmail.com",
-      "url": "https://github.com/JasGH/vue-tiptap-katex-core"
-    }
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/kerasus/vue-tiptap-katex-core",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint ./"
-  },
-  "dependencies": {
-    "@mdi/font": "^6.9.96",
-    "@tiptap/core": "^2.0.0-beta.209",
-    "@tiptap/extension-table": "^2.0.0-beta.209",
-    "core-js": "^3.26.1",
-    "mathlive": "^0.86.0",
-    "tippy.js": "^6.3.7",
-    "tiptap-extensions": "^1.35.2",
-    "tiptap-text-direction-extension": "^1.0.7",
-    "turndown": "^7.1.1",
-    "vue-drag-resize": "^1.5.4",
-    "vue-notification": "^1.3.20",
-    "vue-upload-component": "^2.8.23",
-    "vue": "^2.5.17",
-    "katex": "^0.16.4"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "@babel/eslint-parser": "^7.19.1",
-    "eslint": "^8.30.0",
-    "eslint-plugin-vue": "^9.8.0",
-    "node-sass": "^8.0.0",
-    "postcss-loader": "^7.0.2",
-    "sass-loader": "^13.2.0",
-    "cacache": "^17.0.4",
-    "css-loader": "^6.7.3",
-    "vue-template-compiler": "^2.5.17",
-    "prosemirror-commands": "^1.3.1",
-    "prosemirror-dropcursor": "1.5.0",
-    "prosemirror-gapcursor": "^1.3.1",
-    "prosemirror-history": "^1.3.0",
-    "prosemirror-keymap": "^1.2.0",
-    "prosemirror-schema-list": "^1.2.2",
-    "prosemirror-state": "^1.4.1",
-    "prosemirror-transform": "^1.7.0",
-    "prosemirror-view": "^1.28.2"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/strongly-recommended",
-      "eslint:recommended"
+    "name": "vue-tiptap-katex-core",
+    "version": "1.0.52",
+    "description": "core of tiptap editor",
+    "main": "index.js",
+    "keywords": [
+        "vue",
+        "tiptap",
+        "katex",
+        "vue-tiptap-katex"
     ],
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "type": "module",
+    "contributors": [
+        {
+            "name": "Ali Esmaeeli",
+            "email": "aliesmaeeli20@gmail.com",
+            "url": "https://github.com/kerasus/vue-tiptap-katex-core"
+        },
+        {
+            "name": "Mostafa Kazemi",
+            "email": "neo.kazemi168@gmail.com",
+            "url": "https://github.com/neokazemi/vue-tiptap-katex-core"
+        },
+        {
+            "name": "Yasaman gonehi",
+            "email": "yasaman.gonehi@gmail.com",
+            "url": "https://github.com/JasGH/vue-tiptap-katex-core"
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/kerasus/vue-tiptap-katex-core",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint ./"
     },
-    "rules": {
-      "vue/attributes-order": "warn",
-      "vue/this-in-template": "error",
-      "vue/arrow-spacing": "error",
-      "vue/block-spacing": "error",
-      "vue/comma-dangle": "error",
-      "vue/eqeqeq": "warn",
-      "vue/key-spacing": "error",
-      "vue/keyword-spacing": "error",
-      "vue/no-deprecated-scope-attribute": "warn",
-      "vue/no-deprecated-slot-attribute": "warn",
-      "vue/no-deprecated-slot-scope-attribute": "warn",
-      "vue/no-irregular-whitespace": "error",
-      "vue/no-reserved-component-names": "error",
-      "vue/valid-v-slot": "error",
-      "quotes": [
-        2,
-        "single"
-      ]
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "dependencies": {
+        "@mdi/font": "^6.9.96",
+        "@tiptap/core": "^2.0.0-beta.209",
+        "@tiptap/extension-table": "^2.0.0-beta.209",
+        "@tiptap/extension-table-cell": "^2.0.3",
+        "core-js": "^3.26.1",
+        "katex": "^0.16.4",
+        "mathlive": "^0.86.0",
+        "tippy.js": "^6.3.7",
+        "tiptap-extensions": "^1.35.2",
+        "tiptap-text-direction-extension": "^1.0.7",
+        "turndown": "^7.1.1",
+        "vue": "^2.5.17",
+        "vue-drag-resize": "^1.5.4",
+        "vue-notification": "^1.3.20",
+        "vue-upload-component": "^2.8.23"
+    },
+    "devDependencies": {
+        "@babel/eslint-parser": "^7.19.1",
+        "@vue/cli-plugin-babel": "~5.0.8",
+        "@vue/cli-plugin-eslint": "^5.0.8",
+        "@vue/cli-service": "^5.0.8",
+        "cacache": "^17.0.4",
+        "css-loader": "^6.7.3",
+        "eslint": "^8.30.0",
+        "eslint-plugin-vue": "^9.8.0",
+        "node-sass": "^8.0.0",
+        "postcss-loader": "^7.0.2",
+        "prosemirror-commands": "^1.3.1",
+        "prosemirror-dropcursor": "1.5.0",
+        "prosemirror-gapcursor": "^1.3.1",
+        "prosemirror-history": "^1.3.0",
+        "prosemirror-keymap": "^1.2.0",
+        "prosemirror-schema-list": "^1.2.2",
+        "prosemirror-state": "^1.4.1",
+        "prosemirror-transform": "^1.7.0",
+        "prosemirror-view": "^1.28.2",
+        "sass-loader": "^13.2.0",
+        "vue-template-compiler": "^2.5.17"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/strongly-recommended",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "rules": {
+            "vue/attributes-order": "warn",
+            "vue/this-in-template": "error",
+            "vue/arrow-spacing": "error",
+            "vue/block-spacing": "error",
+            "vue/comma-dangle": "error",
+            "vue/eqeqeq": "warn",
+            "vue/key-spacing": "error",
+            "vue/keyword-spacing": "error",
+            "vue/no-deprecated-scope-attribute": "warn",
+            "vue/no-deprecated-slot-attribute": "warn",
+            "vue/no-deprecated-slot-scope-attribute": "warn",
+            "vue/no-irregular-whitespace": "error",
+            "vue/no-reserved-component-names": "error",
+            "vue/valid-v-slot": "error",
+            "quotes": [
+                2,
+                "single"
+            ]
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
 }

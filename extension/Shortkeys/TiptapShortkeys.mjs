@@ -1,5 +1,5 @@
 import {Extension} from '@tiptap/core';
-import mixinConvertToTiptap from '../../mixins/convertToTiptap';
+import mixinConvertToTiptap from '../../mixins/convertToTiptap.mjs';
 
 const Shortkeys = Extension.create({
     name: 'customShortkeys',
