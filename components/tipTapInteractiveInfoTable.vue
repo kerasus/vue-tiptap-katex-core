@@ -151,11 +151,11 @@ export default {
         if (string.search('ctrl') !== -1) {
           shortKeyImages.push(this.keyBoardKeys.ctrl)
         }
-        if (string.search('Space') !== -1) {
-          shortKeyImages.push(this.keyBoardKeys.space)
-        }
         if (string.search('shift') !== -1) {
           shortKeyImages.push(this.keyBoardKeys.shift)
+        }
+        if (string.search('Space') !== -1) {
+          shortKeyImages.push(this.keyBoardKeys.space)
         }
         if (string.search('alt') !== -1) {
           shortKeyImages.push(this.keyBoardKeys.alt)
@@ -316,16 +316,18 @@ export default {
 }
 
 .modal-content {
+  display: flex;
+  flex-direction: column;
   background-color: #fefefe;
-  margin: auto;
+  margin: auto auto 150px;
   padding: 10px;
   border: 1px solid #888;
   width: 530px;
 }
 
 .close {
+  text-align: right;
   color: #aaaaaa;
-  float: right;
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 10px;
