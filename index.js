@@ -2,7 +2,7 @@
 
 import {EXTRA_KEYBOARD_LAYER, EXTRA_KEYBOARD} from './components/formula/ExtraKeyboard'
 import {katexShortkeys} from './components/formula/KatexShortkeys'
-import MixinComponentFormula from './components/formula/mixin'
+import MixinComponentFormula from './components/formula/mixin.mjs'
 
 import MixinComponentImageUpload from './components/ImageUpload/mixin'
 

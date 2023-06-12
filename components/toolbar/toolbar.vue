@@ -1,6 +1,6 @@
 <template>
   <div
-      v-if="editor"
+      v-if="editor && isToolbarReady"
       class="tiptap-toolbar"
   >
     <!--        IMPORTANT : EACH TOOLBAR ITEM'S ID SHOULD BE IN THIS FORM : toolbar-item-(if more than 2 words , use "-") -->
@@ -450,7 +450,7 @@
 <script>
 import InteractiveInfoTable from '../tipTapInteractiveInfoTable.vue';
 
-import tippy from 'tippy.js';
+let Tippy
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import '../../css/toolbar-Item.scss'
 
@@ -463,12 +463,22 @@ export default {
   },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      isToolbarReady: false
     }
   },
   mixins: [mixinConvertToTiptap],
   mounted() {
-    this.setAllTooltips()
+    if (typeof window !== 'undefined') {
+      import('tippy.js')
+          .then((response) => {
+            Tippy = response.default
+            this.isToolbarReady = true
+            this.$nextTick(() => {
+              this.setAllTooltips()
+            })
+          })
+    }
   },
   props: {
     editor: {
@@ -501,11 +511,10 @@ export default {
   },
   methods: {
     setAllTooltips(){
-      let that = this
       var toolbarItems = this.getAllToolbarItems()
-      toolbarItems.forEach(function(item) {
-        var name = that.getToolbarItemName(item.id)
-        that.setTippyForEl(item.id , name)
+      toolbarItems.forEach((item) => {
+        var name = this.getToolbarItemName(item.id)
+        this.setTippyForEl(item.id , name)
       })
     },
     getAllToolbarItems(){
@@ -515,7 +524,7 @@ export default {
       return itemId.replace('toolbar-item-', '').replace('-' , ' ')
     },
     setTippyForEl(itemId , content){
-      tippy('#' + itemId , {
+      Tippy('#' + itemId , {
         content: content,
       })
     },
