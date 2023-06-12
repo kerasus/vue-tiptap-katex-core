@@ -1,8 +1,8 @@
 import katex from 'katex'
-import {MathfieldElement} from 'mathlive'
 import {katexShortkeys} from './KatexShortkeys.js'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard.js'
 import mixinConvertToTiptap from '../../mixins/convertToTiptap.mjs'
+let Mathfield
 
 const MixinComponentFormula = {
     props: {
@@ -12,15 +12,16 @@ const MixinComponentFormula = {
         },
         updateAttributes: {
             type: Function,
-            required: true,
+            required: true
         },
         editor: {
             type: Object,
-            default: () => {return {}}
+            default: () => { return {} }
         }
     },
     data: () => {
         return {
+            isElementReady: false,
             editModal: false,
             latexData: null,
             formulaEditPanel: '',
@@ -32,27 +33,6 @@ const MixinComponentFormula = {
             mf: null,
             isFormulaBroken: false
         }
-    },
-    watch: {
-        editMode(newValue) {
-            if (!newValue) {
-                return
-            }
-            this.$nextTick(() => {
-                this.loadMathLive()
-            });
-        },
-        latexData: function (newValue) {
-            this.updateAttributes({
-                // katex: this.latexData
-                katex: newValue
-            })
-            // formulaEditPanel is a string, the default value as sth to click on to load MathLive
-            if (newValue === 'formulaEditPanel') {
-                return
-            }
-            this.katex = newValue
-        },
     },
     computed: {
         keyboardList() {
@@ -72,12 +52,38 @@ const MixinComponentFormula = {
             })
         }
     },
-    created() {
+    watch: {
+        editMode(newValue) {
+            if (!newValue) {
+                return
+            }
+            this.$nextTick(() => {
+                this.loadMathLive()
+            })
+        },
+        latexData: function (newValue) {
+            this.updateAttributes({
+                // katex: this.latexData
+                katex: newValue
+            })
+            // formulaEditPanel is a string, the default value as sth to click on to load MathLive
+            if (newValue === 'formulaEditPanel') {
+                return
+            }
+            this.katex = newValue
+        }
+    },
+    mounted () {
         this.katex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
         this.editMode = this.node.attrs.editMode
         this.overrideKeyboardEvent()
-    },
-    mounted () {
+        if (typeof window !== 'undefined') {
+            import('mathlive')
+                .then((response) => {
+                    Mathfield = response.MathfieldElement
+                    this.isElementReady = true
+                })
+        }
         if (this.node.attrs.editMode) {
             setTimeout(() => {
                 this.mf.executeCommand('toggleVirtualKeyboard')
@@ -104,36 +110,36 @@ const MixinComponentFormula = {
             }
         },
         overrideKeyboardEvent () {
-            window.document.onkeydown = overrideKeyboardEvent;
-            window.document.onkeyup = overrideKeyboardEvent;
-            const keyIsDown = {};
+            window.document.onkeydown = overrideKeyboardEvent
+            window.document.onkeyup = overrideKeyboardEvent
+            const keyIsDown = {}
 
             function overrideKeyboardEvent(e) {
                 if (e.keyCode !== 17) {
                     return
                 }
-                switch(e.type){
+                switch (e.type) {
                     case 'keydown':
-                        if(!keyIsDown[e.keyCode]){
-                            keyIsDown[e.keyCode] = true;
+                        if (!keyIsDown[e.keyCode]) {
+                            keyIsDown[e.keyCode] = true
                             // do key down stuff here
                         }
-                        break;
+                        break
                     case 'keyup':
-                        delete(keyIsDown[e.keyCode]);
+                        delete (keyIsDown[e.keyCode])
                         // do key up stuff here
-                        break;
+                        break
                 }
-                disabledEventPropagation(e);
-                e.preventDefault();
-                return false;
+                disabledEventPropagation(e)
+                e.preventDefault()
+                return false
             }
             function disabledEventPropagation(e) {
-                if(e){
-                    if(e.stopPropagation){
-                        e.stopPropagation();
-                    } else if(window.event){
-                        window.event.cancelBubble = true;
+                if (e) {
+                    if (e.stopPropagation) {
+                        e.stopPropagation()
+                    } else if (window.event) {
+                        window.event.cancelBubble = true
                     }
                 }
             }
@@ -145,12 +151,12 @@ const MixinComponentFormula = {
                 safe: true,
                 trust: true
             })
-            let el = document.createElement('div')
+            const el = document.createElement('div')
             el.innerHTML = katexString
-            el.querySelectorAll('.katex-error').forEach(error => { //configable error hangdling ToDo
-                console.log(error.attributes['title'])
+            el.querySelectorAll('.katex-error').forEach(error => { // configable error hangdling ToDo
+                console.log(error.attributes.title)
                 hasError = true
-                if (error.attributes['title'].nodeValue.includes('KaTeX parse error: Invalid delimiter \'?\' after \'\\right\'')) {
+                if (error.attributes.title.nodeValue.includes('KaTeX parse error: Invalid delimiter \'?\' after \'\\right\'')) {
                     // this.$notify({
                     //     group: 'error',
                     //     title: 'مشکلی رخ داده است',
@@ -158,7 +164,7 @@ const MixinComponentFormula = {
                     //     type: 'error',
                     //     duration: 10000
                     // })
-                } else if (error.attributes['title'].nodeValue.includes('KaTeX parse error: Can\'t use function \'$\' in math mode')) {
+                } else if (error.attributes.title.nodeValue.includes('KaTeX parse error: Can\'t use function \'$\' in math mode')) {
                     // this.$notify({
                     //     group: 'error',
                     //     title: 'مشکلی رخ داده است',
@@ -205,7 +211,7 @@ const MixinComponentFormula = {
                 .replaceAll('&nbsp;', ' ')
         },
         loadMathLive() {
-            let mathliveOptions = {
+            const mathliveOptions = {
                 customVirtualKeyboardLayers: EXTRA_KEYBOARD_LAYER,
                 customVirtualKeyboards: EXTRA_KEYBOARD,
                 virtualKeyboards: this.keyboardList,
@@ -213,13 +219,13 @@ const MixinComponentFormula = {
                 keypressSound: 'none',
                 mathModeSpace: '\\:',
                 inlineShortcuts: {
-                    'lim': { mode: 'math', value: '\\lim\\limits_{x \\to \\infty}' },
-                },
+                    lim: { mode: 'math', value: '\\lim\\limits_{x \\to \\infty}' }
+                }
             }
             Object.assign(mathliveOptions, this.editor.editorOptions.mathliveOptions)
-            let that = this
-            const mf = new MathfieldElement()
-            mf.setOptions(mathliveOptions);
+            const that = this
+            const mf = new Mathfield()
+            mf.setOptions(mathliveOptions)
             if (this.doesKatexHaveErrors()) {
                 this.isFormulaBroken = true
             }
@@ -244,7 +250,6 @@ const MixinComponentFormula = {
             // mf.addEventListener('selection-change', (ev) => {
             //     console.log('selection-change ev', this.mf.getValue())
             // })
-
             this.$refs.mathfield.appendChild(mf)
 
             that.latexData = that.getMathliveModifiedValue(mf.getValue())
@@ -262,7 +267,7 @@ const MixinComponentFormula = {
                 keystroke += 'shift+'
             }
             if (keyCode) {
-                keystroke += '['+ keyCode +']'
+                keystroke += '[' + keyCode + ']'
             }
             if (keystroke === 'ctrl+[Enter]') {
                 ev.preventDefault()
@@ -273,13 +278,13 @@ const MixinComponentFormula = {
             if (ev.key === 'گ') {
                 ev.preventDefault()
                 mf.insert('گ')
-                setTimeout(()=> {
+                setTimeout(() => {
                     mf.executeCommand('undo')
                 }, 100)
             }
             if (ev.key === 'پ' && ev.keyCode === 220) {
                 ev.preventDefault()
-                setTimeout(()=> {
+                setTimeout(() => {
                     mf.executeCommand('undo')
                     mf.insert('پ')
                 }, 100)

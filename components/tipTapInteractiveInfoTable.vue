@@ -128,7 +128,6 @@ export default {
   created() {
     this.renderedShortKeys = katexShortkeys
     this.renderShortKeysImages('ctrl+alt+[KeyT]]')
-    // console.log(this.shortKeyImages)
   },
   computed: {
     renderItems() {
@@ -143,7 +142,6 @@ export default {
         if (string.includes('#')) {
           str = string.replace(/#0/g, 'x').replace(/#\?/g, 'y')
         }
-        console.log(str);
         return katex.renderToString(str)
       }
     },
