@@ -80,7 +80,9 @@ export default {
       keyBoardKeys: {
         space: 'images/keyBoardKeys/space.png',
         ctrl: 'images/keyBoardKeys/ctrl.png',
+        shift: 'images/keyBoardKeys/shift.png',
         alt: 'images/keyBoardKeys/alt.png',
+        quote: 'images/keyBoardKeys/quote.png',
         T: 'images/keyBoardKeys/T.png',
         A: 'images/keyBoardKeys/A.png',
         W: 'images/keyBoardKeys/W.png',
@@ -131,7 +133,18 @@ export default {
   computed: {
     renderItems() {
       return (string) => {
-        return katex.renderToString(string)
+        let str = string
+        if (string === '\\enspace') {
+          str = '\\text{space}'
+        }
+        if (string === '\\,') {
+          str = '\\text{half-space}'
+        }
+        if (string.includes('#')) {
+          str = string.replace(/#0/g, 'x').replace(/#\?/g, 'y')
+        }
+        console.log(str);
+        return katex.renderToString(str)
       }
     },
     renderShortKeysImages() {
@@ -143,8 +156,14 @@ export default {
         if (string.search('Space') !== -1) {
           shortKeyImages.push(this.keyBoardKeys.space)
         }
+        if (string.search('shift') !== -1) {
+          shortKeyImages.push(this.keyBoardKeys.shift)
+        }
         if (string.search('alt') !== -1) {
           shortKeyImages.push(this.keyBoardKeys.alt)
+        }
+        if (string.search('Quote') !== -1) {
+          shortKeyImages.push(this.keyBoardKeys.quote)
         }
         if (string.search('KeyT') !== -1) {
           shortKeyImages.push(this.keyBoardKeys.T)
