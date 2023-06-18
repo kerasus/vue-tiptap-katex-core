@@ -20,6 +20,8 @@ import ComponentTipTapInteractiveInfoTable from './components/tipTapInteractiveI
 
 import ExtensionTiptapShortkeys from './extension/Shortkeys/TiptapShortkeys.mjs'
 import ExtensionThinSpace from './extension/ThinSpace/ThinSpace.mjs'
+import ExtensionTextDirection from './extension/tiptap-text-direction-extension/index.mjs'
+import ExtensionTableCell from './extension/table.js'
 
 import MixinConvertToTiptap from './mixins/convertToTiptap.mjs'
 
@@ -44,6 +46,8 @@ export {
 
     ExtensionTiptapShortkeys,
     ExtensionThinSpace,
+    ExtensionTextDirection,
+    ExtensionTableCell,
 
     MixinConvertToTiptap
 }
