@@ -2,14 +2,7 @@
   "name": "vue-tiptap-katex-core",
   "version": "2.0.5",
   "description": "core of tiptap editor",
-  "exports": {
-    ".": {
-      "import": "./index.mjs",
-      "require": "./index.cjs"
-    },
-    "./css/": "./css/",
-    "./components/": "./components/"
-  },
+  "main": "index.js",
   "keywords": [
     "vue",
     "tiptap",
