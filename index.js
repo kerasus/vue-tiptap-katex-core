@@ -25,6 +25,8 @@ import ExtensionTableCell from './extension/table.js'
 
 import MixinConvertToTiptap from './mixins/convertToTiptap.mjs'
 
+import * as Assist from './assist.js'
+
 export {
     MixinComponentFormula,
     EXTRA_KEYBOARD_LAYER, EXTRA_KEYBOARD,
@@ -49,5 +51,6 @@ export {
     ExtensionTextDirection,
     ExtensionTableCell,
 
-    MixinConvertToTiptap
+    MixinConvertToTiptap,
+    Assist,
 }
