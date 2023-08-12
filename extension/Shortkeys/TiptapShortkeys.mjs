@@ -1,5 +1,5 @@
 import {Extension} from '@tiptap/core';
-import * as Assist from '../assist.js'
+import * as Assist from '../../assist.js'
 
 const Shortkeys = Extension.create({
     name: 'customShortkeys',

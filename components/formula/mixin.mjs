@@ -1,7 +1,7 @@
 import katex from 'katex'
 import {katexShortkeys} from './KatexShortkeys.js'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard.js'
-import * as Assist from '../assist.js'
+import * as Assist from '../../assist.js'
 
 let Mathfield
 
