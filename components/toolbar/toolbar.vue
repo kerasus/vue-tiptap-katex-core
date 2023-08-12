@@ -454,8 +454,6 @@ let Tippy
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import '../../css/toolbar-Item.scss'
 
-import mixinConvertToTiptap from '../../mixins/convertToTiptap.mjs';
-
 export default {
   name: 'Toolbar',
   components: {
@@ -467,7 +465,6 @@ export default {
       isToolbarReady: false
     }
   },
-  mixins: [mixinConvertToTiptap],
   mounted() {
     if (typeof window !== 'undefined') {
       import('tippy.js')

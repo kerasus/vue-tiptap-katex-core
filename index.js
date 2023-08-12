@@ -23,8 +23,6 @@ import ExtensionThinSpace from './extension/ThinSpace/ThinSpace.mjs'
 import ExtensionTextDirection from './extension/tiptap-text-direction-extension/index.mjs'
 import ExtensionTableCell from './extension/table.js'
 
-import MixinConvertToTiptap from './mixins/convertToTiptap.mjs'
-
 import * as Assist from './assist.js'
 
 export {
@@ -51,6 +49,5 @@ export {
     ExtensionTextDirection,
     ExtensionTableCell,
 
-    MixinConvertToTiptap,
-    Assist,
+    Assist
 }
