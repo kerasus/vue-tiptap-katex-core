@@ -88,6 +88,26 @@
       <li>
         <div
             class="toolbar-item"
+            id="toolbar-item-Link"
+        >
+          <button @click="setLink" :class="{ 'is-active': editor.isActive('link') }">
+            <span class="mdi mdi-link toolbar-item-icon"/>
+          </button>
+        </div>
+      </li>
+      <li>
+        <div
+            class="toolbar-item"
+            id="toolbar-item-unsetLink"
+        >
+          <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">
+            <span class="mdi mdi-link-off toolbar-item-icon"/>
+          </button>
+        </div>
+      </li>
+      <li>
+        <div
+            class="toolbar-item"
             id="toolbar-item-Bold"
             @click="editor.chain().focus().toggleBold().run()"
         >
@@ -510,6 +530,35 @@ export default {
     }
   },
   methods: {
+    setLink() {
+      const previousUrl = this.editor.getAttributes('link').href
+      const url = window.prompt('URL', previousUrl)
+
+      // cancelled
+      if (url === null) {
+        return
+      }
+
+      // empty
+      if (url === '') {
+        this.editor
+            .chain()
+            .focus()
+            .extendMarkRange('link')
+            .unsetLink()
+            .run()
+
+        return
+      }
+
+      // update link
+      this.editor
+          .chain()
+          .focus()
+          .extendMarkRange('link')
+          .setLink({ href: url })
+          .run()
+    },
     setAllTooltips(){
       var toolbarItems = this.getAllToolbarItems()
       toolbarItems.forEach((item) => {
