@@ -1,7 +1,8 @@
 import katex from 'katex'
 import {katexShortkeys} from './KatexShortkeys.js'
 import {EXTRA_KEYBOARD, EXTRA_KEYBOARD_LAYER} from './ExtraKeyboard.js'
-import mixinConvertToTiptap from '../../mixins/convertToTiptap.mjs'
+import * as Assist from '../../assist.js'
+
 let Mathfield
 
 const MixinComponentFormula = {
@@ -43,7 +44,7 @@ const MixinComponentFormula = {
             return options
         },
         computedKatex() {
-            const purifiedKatex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
+            const purifiedKatex = Assist.replaceKatexSigns(this.node.attrs.katex.toString())
             this.checkMathLivePanelVisibility(purifiedKatex)
             return katex.renderToString(purifiedKatex, {
                 throwOnError: false,
@@ -74,7 +75,7 @@ const MixinComponentFormula = {
         }
     },
     mounted () {
-        this.katex = mixinConvertToTiptap.methods.replaceKatexSigns(this.node.attrs.katex.toString())
+        this.katex = Assist.replaceKatexSigns(this.node.attrs.katex.toString())
         this.editMode = this.node.attrs.editMode
         this.overrideKeyboardEvent()
         if (typeof window !== 'undefined') {

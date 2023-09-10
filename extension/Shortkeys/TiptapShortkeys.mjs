@@ -1,5 +1,5 @@
 import {Extension} from '@tiptap/core';
-import mixinConvertToTiptap from '../../mixins/convertToTiptap.mjs';
+import * as Assist from '../../assist.js'
 
 const Shortkeys = Extension.create({
     name: 'customShortkeys',
@@ -8,7 +8,7 @@ const Shortkeys = Extension.create({
             // Paste Shortkey
             'Mod-Shift-v': () => navigator.clipboard.readText()
                 .then(text => {
-                    let regex = mixinConvertToTiptap.methods.getRegexPatternForFormula()
+                    let regex = Assist.getRegexPatternForFormula()
                     let counter = 0
                     let formulas = []
                     text = text.replace(regex, match => {
@@ -23,7 +23,7 @@ const Shortkeys = Extension.create({
                     for (let i = 0; i < formulas.length; i++) {
                         str = str.replace('<UniqueFormulaPlaceholder>' + i + '</UniqueFormulaPlaceholder>', formulas[i])
                     }
-                    let string = mixinConvertToTiptap.methods.convertToTiptap(str)
+                    let string = Assist.convertToTiptap(str)
                     this.editor.commands.insertContent(string)
 
                 })
