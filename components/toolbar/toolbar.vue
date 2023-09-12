@@ -405,6 +405,17 @@
         </div>
       </li>
       <li>
+        <div
+            class="toolbar-item"
+            id="toolbar-item-Video"
+            @click="editor.chain().focus().insertContent('<video>').run()"
+        >
+          <span
+              class="mdi mdi-video-outline toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
         <div class="vl" />
       </li>
       <li>
