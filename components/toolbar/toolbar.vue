@@ -426,6 +426,17 @@
           />
         </div>
       </li>
+      <li v-if="editor.editorOptions.loadBareHtml">
+        <div
+            class="toolbar-item"
+            id="toolbar-item-BareHtml"
+            @click="editor.chain().focus().insertContent(`<div class='barehtml'>`).run()"
+        >
+          <span
+              class="mdi mdi-application-brackets-outline toolbar-item-icon"
+          />
+        </div>
+      </li>
       <li>
         <div class="vl" />
       </li>

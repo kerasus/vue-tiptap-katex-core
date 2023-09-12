@@ -68,6 +68,22 @@ export const convertImage = (string) => {
     })
     return wrapper.innerHTML
 }
+export const convertBareHtml = (string) => {
+    let wrapper = document.createElement('div');
+    wrapper.innerHTML = string
+    let doms = wrapper.querySelectorAll('div.barehtml')
+    doms.forEach((item, itemIndex) => {
+        let domItem = item.attributes[0].nodeValue
+        let dataAttr = item.attributes['data']
+        if (domItem && dataAttr) {
+            let domWrapper = document.createElement('div')
+            domWrapper.innerHTML = item.attributes['data'].nodeValue
+            domWrapper.classList.add('barehtml');
+            doms[itemIndex].replaceWith(domWrapper)
+        }
+    })
+    return wrapper.innerHTML
+}
 
 // todo: refactor: modify method name
 export const removeEmptyFormulaElements = (htmlElement) => {
