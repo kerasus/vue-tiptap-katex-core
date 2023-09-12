@@ -416,6 +416,17 @@
         </div>
       </li>
       <li>
+        <div
+            class="toolbar-item"
+            id="toolbar-item-audio"
+            @click="editor.chain().focus().insertContent('<audio>').run()"
+        >
+          <span
+              class="mdi mdi-volume-high toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
         <div class="vl" />
       </li>
       <li>
